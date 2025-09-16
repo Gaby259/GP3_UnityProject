@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
-        Vector3 targetDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
+        Vector3 targetDirection = transform.right * _moveInput.x;
         Vector3 targetVelocity = targetDirection * controllerConfig.MovementSpeed;
 
         float acceleration = IsGrounded() ? controllerConfig.groundAcceleration : controllerConfig.AirAcceleration;
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
     {
        _mouseRotation = mouseRotation;
     }
-// is a platform game the look of the character is not the camera is the cursor 
+
     private void Rotate()
     {
         transform.Rotate(Vector3.up, _mouseRotation.x * controllerConfig.mouseSensitivity);
