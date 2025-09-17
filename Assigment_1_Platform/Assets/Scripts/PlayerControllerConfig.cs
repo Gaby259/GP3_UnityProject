@@ -10,8 +10,15 @@ public class PlayerControllerConfig : ScriptableObject
     public float groundDeceleration = 10f;
    
     [Header("Jump")]
-    public float jumpHeight = 10f;
-    public float gravity = 9.81f;
+    public float jumpHeight = 10f;   
+    public float gravity = 9.81f;    
+    public int maxAirJumps = 1;    
+
+    [Header("Dash")]
+    public float dashSpeed = 18f;      
+    public float dashDuration = 0.18f;  
+    public float dashCooldown = 0.6f;   
+    public bool allowAirDash = true;   
     [field:SerializeField]public float AirAcceleration { get; private set; } = 5f; //max velocity when a player is in the air 
     
     [Header("Rotation")]

@@ -15,13 +15,20 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveInput;
     private Vector3 _currentVelocity;
     private bool _isGrounded;
+    private bool _canMove = true;
     
     [Header("Look Rotation")]
     [SerializeField] private Transform lookTarget;
     private Vector2 _mouseRotation; 
     private Vector2 _mouseSensitivity;
     
-    private bool _canMove = true;
+    [Header("Dash")]
+    private bool _isDashing = true;
+    private bool _hasAirDashed = false;
+    private Vector3 _dashDirection;
+    private float _dashTimeLeft = 0f;
+    private float _dashCooldownLeft = 0f;
+
     
 
    void Awake()
@@ -37,6 +44,7 @@ public class PlayerController : MonoBehaviour
             _inputController.MoveEvent += MovementInput;
             _inputController.JumpEvent += JumpInput;
             _inputController.MouseLookEvent += RotationInput;
+            _inputController.DashEvent +=DashPressed;
         }
     }
     private void OnDisable() // this is for handling the error MissingReferenceException
@@ -46,6 +54,7 @@ public class PlayerController : MonoBehaviour
             _inputController.MoveEvent -= MovementInput;
             _inputController.JumpEvent -= JumpInput;
             _inputController.MouseLookEvent -= RotationInput;
+            _inputController.DashEvent -= DashPressed;
         }
     }
 
@@ -58,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+        HandleDash();
         if (_canMove)
         {
             Movement();
@@ -97,35 +106,7 @@ public class PlayerController : MonoBehaviour
     {
        _mouseRotation = mouseRotation;
     }
-
-    private void Rotate()
-    {
-        transform.Rotate(Vector3.up, _mouseRotation.x * controllerConfig.mouseSensitivity);
-        lookTarget.Rotate(Vector3.right, -_mouseRotation.y * controllerConfig.mouseSensitivity);
-    }
     
-    private void ClampRotation()
-    {
-        //Camera Clamp Rotation
-        float currentX = lookTarget.rotation.eulerAngles.x;
-        if (currentX > 180) // look at the opposite direction camerabounds
-        {
-            if (currentX < 360 - controllerConfig.CameraBounds)
-            {
-                currentX = 360 - controllerConfig.CameraBounds;
-            }
-        }
-        else if (currentX > controllerConfig.CameraBounds)
-        {
-            currentX = controllerConfig.CameraBounds;
-
-        }
-        Vector3 clampRotation = transform.eulerAngles;
-        clampRotation.x = currentX;
-        lookTarget.eulerAngles = clampRotation;
-    }
-    
-
     private void JumpInput()
     {
         
@@ -151,7 +132,47 @@ public class PlayerController : MonoBehaviour
         _characterController.Move(_currentVelocity * Time.deltaTime);
     
     }
-    
 
+    private void DashPressed()
+    {
+        if (_isDashing || _dashCooldownLeft > 0f) return;
+
+        if (!IsGrounded())
+        {
+            if (!controllerConfig.allowAirDash || _hasAirDashed) return;
+            _hasAirDashed = true;
+        }
+        else
+        {
+            _hasAirDashed = false;
+        }
+    
+        _isDashing = true;
+        _dashTimeLeft = controllerConfig.dashDuration;
+        _dashCooldownLeft = controllerConfig.dashCooldown;
+
+        Vector3 dashInput = transform.right * _moveInput.x;
+        if (dashInput == Vector3.zero) dashInput = transform.right;
+        _dashDirection = dashInput.normalized;
+
+        Debug.Log("Dash started");
+    }
+    private void HandleDash()
+    {
+        if (_dashCooldownLeft > 0f)
+        {
+            _dashCooldownLeft -= Time.deltaTime;
+        }
+
+        if (_isDashing)
+        {
+            _characterController.Move(_dashDirection * controllerConfig.dashSpeed * Time.deltaTime);
+            _dashTimeLeft -= Time.deltaTime;
+            if (_dashTimeLeft <= 0f)
+            {
+                _isDashing = false;
+            }
+        }
+    }
    
 }
