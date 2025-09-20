@@ -27,8 +27,6 @@ public class InputController : MonoBehaviour
         _gameControls.Player.Move.performed += OnMovePerformed;
         _gameControls.Player.Move.canceled += OnMoveCancelled;
         _gameControls.Player.Jump.performed += OnJumpPerformed; //performed a jump call this function
-        _gameControls.Player.Look.performed += OnMouseMove;
-        _gameControls.Player.Look.canceled += OnMouseMoveCancelled;
         _gameControls.Player.Dash.performed += OnDashPerformed;
         _gameControls.Player.Attack.performed += OnAttackPerformed;
         _gameControls.Player.Attack.canceled += OnAttackCancelled;
@@ -51,15 +49,7 @@ public class InputController : MonoBehaviour
         JumpEvent?.Invoke();
         
     }
-
-    private void OnMouseMove(InputAction.CallbackContext context)
-    {
-       MouseLookEvent?.Invoke(context.ReadValue<Vector2>());
-    }
-    private void OnMouseMoveCancelled(InputAction.CallbackContext context)
-    {
-        MouseLookEvent?.Invoke(Vector2.zero);
-    }
+    
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
         AttackEvent?.Invoke();

@@ -17,17 +17,13 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded;
     private bool _canMove = true;
     
-    [Header("Look Rotation")]
-    [SerializeField] private Transform lookTarget;
-    private Vector2 _mouseRotation; 
-    private Vector2 _mouseSensitivity;
-    
     [Header("Dash")]
     private bool _isDashing = true;
     private bool _hasAirDashed = false;
     private Vector3 _dashDirection;
     private float _dashTimeLeft = 0f;
     private float _dashCooldownLeft = 0f;
+    private bool _canDash = false;
 
     
 
@@ -43,7 +39,6 @@ public class PlayerController : MonoBehaviour
         {
             _inputController.MoveEvent += MovementInput;
             _inputController.JumpEvent += JumpInput;
-            _inputController.MouseLookEvent += RotationInput;
             _inputController.DashEvent +=DashPressed;
         }
     }
@@ -53,7 +48,6 @@ public class PlayerController : MonoBehaviour
         {
             _inputController.MoveEvent -= MovementInput;
             _inputController.JumpEvent -= JumpInput;
-            _inputController.MouseLookEvent -= RotationInput;
             _inputController.DashEvent -= DashPressed;
         }
     }
@@ -85,27 +79,36 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 targetDirection = transform.right * _moveInput.x;
         Vector3 targetVelocity = targetDirection * controllerConfig.MovementSpeed;
+        if (Physics.Raycast(transform.position, targetDirection, out RaycastHit hit, 0.6f, groundLayer))
+        {
+            if (hit.collider.CompareTag("Wall") && Mathf.Abs(_moveInput.x) > 0)
+            {
+                _currentVelocity.x = 0;
+            }
+        }
 
         float acceleration = IsGrounded() ? controllerConfig.groundAcceleration : controllerConfig.AirAcceleration;
-        
-        _currentVelocity =  Vector3.MoveTowards(_currentVelocity, targetVelocity, acceleration  * Time.deltaTime); //Time.deltaTime is for stopping player to float 
-        Vector3 horizontalFinalVelocity = new Vector3(_currentVelocity.x, 0, _currentVelocity.z);//Ignore the Y velocity and take into account x,z 
-        Vector3 deceleratedVelocity = Vector3.MoveTowards(horizontalFinalVelocity, Vector3.zero, controllerConfig.groundDeceleration* Time.deltaTime); //Vector3.MoveTowards(a, b, maxDistanceDelta)
 
+        // Si el input es contrario a la velocidad, dobla la aceleración
+        if (Mathf.Sign(_moveInput.x) != Mathf.Sign(_currentVelocity.x) && _moveInput.x != 0)
+            acceleration *= 2f;
+
+        _currentVelocity = Vector3.MoveTowards(_currentVelocity, targetVelocity, acceleration * Time.deltaTime);
+
+        Vector3 horizontalFinalVelocity = new Vector3(_currentVelocity.x, 0, _currentVelocity.z);//Ignore the Y velocity and take into account x,z 
+        _currentVelocity =  Vector3.MoveTowards(_currentVelocity, targetVelocity, acceleration  * Time.deltaTime); //Time.deltaTime is for stopping player to float 
+        Vector3 deceleratedVelocity = Vector3.MoveTowards(horizontalFinalVelocity, Vector3.zero, controllerConfig.groundDeceleration* Time.deltaTime); //Vector3.MoveTowards(a, b, maxDistanceDelta)
+        
         //DECELERATION
        if (targetDirection == Vector3.zero)// if input is realized, return;
         {
             _currentVelocity.x = deceleratedVelocity.x;
             _currentVelocity.z = deceleratedVelocity.z;
         }
-        
+        _currentVelocity.x = horizontalFinalVelocity.x;
+        _currentVelocity.z = horizontalFinalVelocity.z;
     }
     
-
-    private void RotationInput(Vector2 mouseRotation)
-    {
-       _mouseRotation = mouseRotation;
-    }
     
     private void JumpInput()
     {
@@ -159,12 +162,19 @@ public class PlayerController : MonoBehaviour
     }
     private void HandleDash()
     {
+        // Resets the dash if the player touches the ground
+        if (IsGrounded() && !_canDash) //Player is in the ground but CAN'T dash
+        {
+            _canDash = true;
+            _hasAirDashed = false; //Resets the air Dash
+        }
+        //Dash Cooldown
         if (_dashCooldownLeft > 0f)
         {
             _dashCooldownLeft -= Time.deltaTime;
         }
-
-        if (_isDashing)
+        //The dash is activated
+        if (_canDash && _isDashing)
         {
             _characterController.Move(_dashDirection * controllerConfig.dashSpeed * Time.deltaTime);
             _dashTimeLeft -= Time.deltaTime;

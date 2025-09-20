@@ -20,10 +20,6 @@ public class PlayerControllerConfig : ScriptableObject
     public float dashCooldown = 0.6f;   
     public bool allowAirDash = true;   
     [field:SerializeField]public float AirAcceleration { get; private set; } = 5f; //max velocity when a player is in the air 
-    
-    [Header("Rotation")]
-    [field:SerializeField]public float CameraBounds { get; private set; } = 30f;
-    public float mouseSensitivity = 100f;
 
     [Header("Interact")] 
     public float interactDistance = 1000f;
