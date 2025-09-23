@@ -23,9 +23,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 _dashDirection;
     private float _dashTimeLeft = 0f;
     private float _dashCooldownLeft = 0f;
-    private bool _canDash = false;
+    private bool _canDash = true;
 
-    
+     
 
    void Awake()
     {
@@ -59,8 +59,15 @@ public class PlayerController : MonoBehaviour
     }
     
 
-    void Update()
+    private void Update()
     {
+        // Resetea el dash cuando toca el suelo
+        if (IsGrounded() && !_canDash)
+        {
+            _canDash = true;
+            _hasAirDashed = false;
+        }
+
         HandleDash();
         if (_canMove)
         {
@@ -68,7 +75,7 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
     }
-    
+
 
     private void MovementInput (Vector2 movement)
     {
@@ -79,9 +86,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 targetDirection = transform.right * _moveInput.x;
         Vector3 targetVelocity = targetDirection * controllerConfig.MovementSpeed;
+
+        // Si detectas pared, corta la velocidad horizontal
         if (Physics.Raycast(transform.position, targetDirection, out RaycastHit hit, 0.6f, groundLayer))
         {
-            if (hit.collider.CompareTag("Wall") && Mathf.Abs(_moveInput.x) > 0)
+            if (hit.collider.CompareTag("Wall") && Mathf.Abs(_moveInput.x) > 0) // if player touches the wall velocity = 0
             {
                 _currentVelocity.x = 0;
             }
@@ -90,25 +99,23 @@ public class PlayerController : MonoBehaviour
         float acceleration = IsGrounded() ? controllerConfig.groundAcceleration : controllerConfig.AirAcceleration;
 
         // Si el input es contrario a la velocidad, dobla la aceleración
-        if (Mathf.Sign(_moveInput.x) != Mathf.Sign(_currentVelocity.x) && _moveInput.x != 0)
-            acceleration *= 2f;
+        if (_moveInput.x != 0 && _moveInput.x * _currentVelocity.x < 0)
+            acceleration *= controllerConfig.accelerationMultiplier;
 
         _currentVelocity = Vector3.MoveTowards(_currentVelocity, targetVelocity, acceleration * Time.deltaTime);
 
-        Vector3 horizontalFinalVelocity = new Vector3(_currentVelocity.x, 0, _currentVelocity.z);//Ignore the Y velocity and take into account x,z 
-        _currentVelocity =  Vector3.MoveTowards(_currentVelocity, targetVelocity, acceleration  * Time.deltaTime); //Time.deltaTime is for stopping player to float 
-        Vector3 deceleratedVelocity = Vector3.MoveTowards(horizontalFinalVelocity, Vector3.zero, controllerConfig.groundDeceleration* Time.deltaTime); //Vector3.MoveTowards(a, b, maxDistanceDelta)
-        
-        //DECELERATION
-       if (targetDirection == Vector3.zero)// if input is realized, return;
+        Vector3 horizontalFinalVelocity = new Vector3(_currentVelocity.x, 0, _currentVelocity.z);
+
+        // Deceleración si no hay input
+        if (targetDirection == Vector3.zero)
         {
-            _currentVelocity.x = deceleratedVelocity.x;
-            _currentVelocity.z = deceleratedVelocity.z;
+            horizontalFinalVelocity = Vector3.MoveTowards(horizontalFinalVelocity, 
+                Vector3.zero, controllerConfig.groundDeceleration * Time.deltaTime);
         }
+
         _currentVelocity.x = horizontalFinalVelocity.x;
         _currentVelocity.z = horizontalFinalVelocity.z;
     }
-    
     
     private void JumpInput()
     {
@@ -138,24 +145,23 @@ public class PlayerController : MonoBehaviour
 
     private void DashPressed()
     {
-        if (_isDashing || _dashCooldownLeft > 0f) return;
+        if (!_canDash || _dashCooldownLeft > 0f) return;
 
         if (!IsGrounded())
         {
             if (!controllerConfig.allowAirDash || _hasAirDashed) return;
             _hasAirDashed = true;
         }
-        else
-        {
-            _hasAirDashed = false;
-        }
-    
+
         _isDashing = true;
+        _canDash = false;
         _dashTimeLeft = controllerConfig.dashDuration;
         _dashCooldownLeft = controllerConfig.dashCooldown;
-
+    
         Vector3 dashInput = transform.right * _moveInput.x;
         if (dashInput == Vector3.zero) dashInput = transform.right;
+        Debug.DrawRay(transform.position, _dashDirection * 5f, Color.red);
+
         _dashDirection = dashInput.normalized;
 
         Debug.Log("Dash started");

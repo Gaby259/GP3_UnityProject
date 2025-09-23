@@ -8,6 +8,7 @@ public class PlayerControllerConfig : ScriptableObject
     [field:SerializeField]public float MovementSpeed { get; private set; }= 6f; //better practice for variables
     public float groundAcceleration = 10f; //max velocity when a player is on the floor 
     public float groundDeceleration = 10f;
+    public float accelerationMultiplier = 2f;
    
     [Header("Jump")]
     public float jumpHeight = 10f;   

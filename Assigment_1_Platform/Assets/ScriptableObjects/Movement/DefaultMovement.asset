@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f89f9e79b05e2429f211d152590149, type: 3}
   m_Name: DefaultMovement
   m_EditorClassIdentifier: 
-  <MovementSpeed>k__BackingField: 15
+  <MovementSpeed>k__BackingField: 16
   groundAcceleration: 10
   groundDeceleration: 15
-  jumpHeight: 15
-  gravity: 2
-  maxAirJumps: 1
-  dashSpeed: 17
+  accelerationMultiplier: 2
+  jumpHeight: 18
+  gravity: 3
+  maxAirJumps: 0
+  dashSpeed: 20
   dashDuration: 0.3
   dashCooldown: 1
-  allowAirDash: 1
-  <AirAcceleration>k__BackingField: 5
-  <CameraBounds>k__BackingField: 30
-  mouseSensitivity: 0.15
+  allowAirDash: 0
+  <AirAcceleration>k__BackingField: 10
   interactDistance: 5
