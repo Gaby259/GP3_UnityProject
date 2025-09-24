@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class AnalyticsManager : MonoBehaviour
+public class AnalyticsManager : Singleton<AnalyticsManager>
 {
    [SerializeField] private TMP_Text collectablesText;
    private int _collectables;
