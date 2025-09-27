@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f89f9e79b05e2429f211d152590149, type: 3}
   m_Name: DefaultMovement
   m_EditorClassIdentifier: 
-  <MovementSpeed>k__BackingField: 16
+  <MovementSpeed>k__BackingField: 14
   groundAcceleration: 10
   groundDeceleration: 15
   accelerationMultiplier: 2

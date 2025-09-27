@@ -22,15 +22,10 @@ public class LavaManager : MonoBehaviour
 
     private void Start()
     {
-        if (lava != null)
-        {
-            lava.OnPlayerCaught.AddListener(HandlePlayerCaught);
-        }
-
-
         if (startOnPlay)
         {
             Invoke(nameof(StartPhases), startDelay);
+            Debug.Log("Starting Lava Phases");
         }
     }
 
@@ -45,11 +40,10 @@ public class LavaManager : MonoBehaviour
     [ContextMenu("Start Phases (Editor)")]
     public void StartPhases()
     {
-        if (!CanStart()) return;
-
         StopPhases(); // stop any other previous phase
         Debug.Log($" Starting phases routine.");
         _routine = StartCoroutine(PhasesRoutine());
+        Debug.Log("Phase routine started" + _routine);
     }
 
     [ContextMenu("Stop Phases (Editor)")]
@@ -91,6 +85,7 @@ public class LavaManager : MonoBehaviour
             for (int i = 0; i < config.phases.Length; i++)
             {
                 var phase = config.phases[i]; // 
+                Debug.Log($"Phase #{i + 1}: {phase}");
 
                 OnPhaseStarted?.Invoke(i);
 
@@ -115,7 +110,6 @@ public class LavaManager : MonoBehaviour
 
     private void HandlePlayerCaught()
     {
-        GameManager.Instance?.Lose();
         StopPhases();               
     }
 }

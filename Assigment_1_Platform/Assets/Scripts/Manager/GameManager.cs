@@ -22,8 +22,11 @@ public class GameManager : Singleton<GameManager>
         OnRareItemsChanged?.Invoke(_rareItems, targetRareItems);
 
         if (_rareItems >= targetRareItems)
+        {
             Debug.Log("Rare items removed");
             Win();
+        }
+           
     }
 
     public void Win()
