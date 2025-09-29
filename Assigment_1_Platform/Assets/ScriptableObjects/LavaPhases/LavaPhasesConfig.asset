@@ -20,9 +20,9 @@ MonoBehaviour:
     riseDuration: 15
     pauseDuration: 10
   - riseSpeed: 1.3
-    riseDuration: 12
+    riseDuration: 9
     pauseDuration: 10
   - riseSpeed: 1.5
-    riseDuration: 10
+    riseDuration: 9
     pauseDuration: 5
   loopPhases: 1

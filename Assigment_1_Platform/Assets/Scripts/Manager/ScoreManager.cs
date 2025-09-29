@@ -10,5 +10,6 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         _score += amount;
         scoreText.text = _score.ToString();
+        SoundManager.Play("Collectable");
     }
 }
