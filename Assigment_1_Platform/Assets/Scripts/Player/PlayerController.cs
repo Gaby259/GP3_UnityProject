@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Resetea el dash cuando toca el suelo
+        // Restart the dash when player touches the floor
         if (IsGrounded() && !_canDash)
         {
             _canDash = true;
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         Vector3 targetDirection = transform.right * _moveInput.x;
         Vector3 targetVelocity = targetDirection * controllerConfig.MovementSpeed;
 
-        // Si detectas pared, corta la velocidad horizontal
+        // if player touches the wall stop the velocity 
         if (Physics.Raycast(transform.position, targetDirection, out RaycastHit hit, 0.6f, groundLayer))
         {
             if (hit.collider.CompareTag("Wall") && Mathf.Abs(_moveInput.x) > 0) // if player touches the wall velocity = 0
@@ -97,8 +97,7 @@ public class PlayerController : MonoBehaviour
         }
 
         float acceleration = IsGrounded() ? controllerConfig.groundAcceleration : controllerConfig.AirAcceleration;
-
-        // Si el input es contrario a la velocidad, dobla la aceleración
+        
         if (_moveInput.x != 0 && _moveInput.x * _currentVelocity.x < 0)
             acceleration *= controllerConfig.accelerationMultiplier;
 
@@ -106,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 horizontalFinalVelocity = new Vector3(_currentVelocity.x, 0, _currentVelocity.z);
 
-        // Deceleración si no hay input
+        // deceleration 
         if (targetDirection == Vector3.zero)
         {
             horizontalFinalVelocity = Vector3.MoveTowards(horizontalFinalVelocity, 

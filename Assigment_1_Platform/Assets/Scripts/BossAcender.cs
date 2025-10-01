@@ -26,12 +26,8 @@ public class BossAcender : MonoBehaviour
     {
         var collider = GetComponent<Collider>();
         collider.isTrigger = true;
-
-        // Si tenemos startPoint, arrancamos desde allí
-        if (startPoint != null)
-            transform.position = startPoint.position;
-
-        // Start from startPoint, if any
+        
+        // Start from startPoint
         if (startPoint != null)
             transform.position = startPoint.position;
     }
@@ -41,14 +37,14 @@ public class BossAcender : MonoBehaviour
         if (_active)
         {
 
-            // Mueve la lava hacia el endPoint
+            // Move lava towards the end point
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 endPoint.position,
                 _speed * Time.deltaTime
             );
 
-            // Si llegó al final, se detiene
+            // If arrives the end point stop
             if (Vector3.Distance(transform.position, endPoint.position) < 0.01f)
                 Stop();
         }
@@ -87,10 +83,11 @@ public class BossAcender : MonoBehaviour
         {
             return;
         }
-        
-
         var health = other.GetComponentInParent<PlayerHealth>();
-        if (health == null) return;
+        if (health == null) 
+        {
+            return;
+        }
 
         if (hitOnEnter)
         {

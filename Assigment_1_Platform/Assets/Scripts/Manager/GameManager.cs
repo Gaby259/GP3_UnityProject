@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Events")]
     public UnityEvent<int,int> OnRareItemsChanged; // Number of rare items required to win
-    public UnityEvent OnShouldStartLava;           // para notificar al LavaManager
+    public UnityEvent OnShouldStartLava;           //Notify the LavaManager
     public UnityEvent OnWin;
     public UnityEvent OnLose;
 

@@ -54,31 +54,31 @@ public class HealthHUD : MonoBehaviour
 
     private void RebuildHearts(int max)
     {
-        // 1) Borra TODO lo que haya dentro del panel (por si quedó algo a mano)
+        // 1) Deletes every previous heart it was existing before 
         for (int i = heartsParent.childCount - 1; i >= 0; i--)
             Destroy(heartsParent.GetChild(i).gameObject);
 
         _hearts.Clear();
         if (max <= 0) return;
 
-        // 2) Crea N corazones
+        // 2) Creates X number of hearts 
         for (int i = 0; i < max; i++)
         {
-            // Instanciar y parentear conservando correctamente el RectTransform
-            var img = Instantiate(heartPrefab);
-            img.rectTransform.SetParent(heartsParent, false);
+            //It creates the heart by instiate and parent the RectTransform 
+            var image = Instantiate(heartPrefab);
+            image.rectTransform.SetParent(heartsParent, false);
 
-            // Normalizar rect (por si el prefab trae offsets raros)
-            var rt = img.rectTransform;
-            rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
-            rt.pivot = new Vector2(0.5f, 0.5f);
-            rt.anchoredPosition = Vector2.zero;
-            rt.localScale = Vector3.one;
+            // Normalize the size of the heart if ots going off set 
+            var rectTransform = image.rectTransform;
+            rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            rectTransform.anchoredPosition = Vector2.zero;
+            rectTransform.localScale = Vector3.one;
 
-            img.sprite = fullHeart;
-            img.preserveAspect = true;
+            image.sprite = fullHeart;
+            image.preserveAspect = true;
 
-            _hearts.Add(img);
+            _hearts.Add(image);
         }
     }
 
@@ -91,13 +91,13 @@ public class HealthHUD : MonoBehaviour
             int logicalIndex = rightToLeft ? (max - 1 - i) : i; // 0 = corazón más a la derecha si rightToLeft
             bool filled = logicalIndex < current;
 
-            var img = _hearts[i];
-            if (img != null) img.sprite = filled ? fullHeart : emptyHeart;
+            var updateImage = _hearts[i];
+            if (updateImage != null) updateImage.sprite = filled ? fullHeart : emptyHeart;
         }
     }
 
     private void HandlePlayerDeath()
     {
-        // hook para UI de muerte si quieres
+        //Can be called by Lose and show an animation or sound effect
     }
 }
