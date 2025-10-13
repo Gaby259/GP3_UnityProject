@@ -20,7 +20,8 @@ public class BossAcender : MonoBehaviour
     [SerializeField] private bool hitOnEnter = true;
 
     private bool _active = false;
-    private float _nextHitTime = 0f;       
+    private float _nextHitTime = 0f;  
+    private PlayerHealth _playerHealth;
 
     private void Awake()
     {
@@ -36,7 +37,6 @@ public class BossAcender : MonoBehaviour
     {
         if (_active)
         {
-
             // Move lava towards the end point
             transform.position = Vector3.MoveTowards(
                 transform.position,
@@ -83,15 +83,15 @@ public class BossAcender : MonoBehaviour
         {
             return;
         }
-        var health = other.GetComponentInParent<PlayerHealth>();
-        if (health == null) 
+        _playerHealth= other.GetComponentInParent<PlayerHealth>();
+        if (_playerHealth== null) 
         {
             return;
         }
 
         if (hitOnEnter)
         {
-            DealDamage(health);                          // first hit on enter
+            DealDamage(_playerHealth);                          // first hit on enter
             _nextHitTime = Time.time + cooldownSeconds;  // wait for next tick
         }
         else
@@ -109,10 +109,12 @@ public class BossAcender : MonoBehaviour
         }
         if (Time.time < _nextHitTime) return;
 
-        var health = other.GetComponentInParent<PlayerHealth>();
-        if (health == null) return;
+        if (_playerHealth == null)
+        {
+            return;
+        }
 
-        DealDamage(health);
+        DealDamage(_playerHealth);
         _nextHitTime = Time.time + cooldownSeconds;      // schedule next tick
     }
 
