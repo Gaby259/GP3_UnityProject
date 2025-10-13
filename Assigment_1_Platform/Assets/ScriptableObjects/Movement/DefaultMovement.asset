@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MovementSpeed>k__BackingField: 14
   groundAcceleration: 10
-  groundDeceleration: 15
-  accelerationMultiplier: 2
+  groundDeceleration: 18
+  accelerationMultiplier: 7
   jumpHeight: 18
   gravity: 3
   maxAirJumps: 0
