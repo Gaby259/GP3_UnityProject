@@ -18,13 +18,18 @@ public class PlayerController : MonoBehaviour
     private bool _canMove = true;
     
     [Header("Dash")]
-    private bool _isDashing = true;
+    private bool _isDashing = false;
     private bool _hasAirDashed = false;
     private Vector3 _dashDirection;
     private float _dashTimeLeft = 0f;
     private float _dashCooldownLeft = 0f;
     private bool _canDash = true;
-
+    
+    [Header("Rotation")]
+    [SerializeField] private Transform modelPivot;  
+    [SerializeField] private float flipSpeed = 12f;
+    private Quaternion _modelRotation;
+    private bool _facingRight = true;       
      
 
    void Awake()
@@ -56,6 +61,9 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        
+        if (modelPivot)
+            _modelRotation = modelPivot.localRotation; //takes the initial pose
     }
     
 
@@ -74,6 +82,7 @@ public class PlayerController : MonoBehaviour
             Movement();
             Jump();
         }
+        UpdateFacingRotation();
     }
 
 
@@ -189,5 +198,44 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-   
+
+    private void UpdateFacingRotation()
+    {
+        if (!modelPivot)
+        {
+            return;
+        }
+        // Read horizontal input
+        float _inputX = _moveInput.x;
+        if (Mathf.Abs(_inputX) < 0.01f)
+        {
+            return; // no movement intention
+        }
+        
+        bool _wantRight = _inputX > 0f;
+        // If player is already facing that direction, do nothing
+        if (_wantRight == _facingRight)
+        {
+            return;
+        }
+        _facingRight = _wantRight;
+
+        Quaternion _targetRotation;
+       
+        if (_facingRight)
+        {
+            _targetRotation = Quaternion.identity;
+        }
+        else
+        {
+            _targetRotation = Quaternion.AngleAxis(180f, modelPivot.up);
+        }
+
+        Quaternion target = _modelRotation * _targetRotation;
+       
+        //Smooth Rotation
+        modelPivot.localRotation = Quaternion.Slerp(modelPivot.localRotation, target, Time.deltaTime * flipSpeed); 
+        //Quaternion.Slerp makes the turn gradual instead of instant
+    }
+
 }
