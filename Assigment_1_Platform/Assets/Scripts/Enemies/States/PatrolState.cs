@@ -24,7 +24,7 @@ public class PatrolState : IState
         // check for the player in range
         if (_stateManager.PlayerChecker.IsPlayerInRange())
         {
-            _stateManager.ChangeState(_stateManager.PatrolState);
+            _stateManager.ChangeState(_stateManager.Attack);
         }
     }
 
