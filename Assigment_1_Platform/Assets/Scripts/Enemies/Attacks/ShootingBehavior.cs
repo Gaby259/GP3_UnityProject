@@ -28,18 +28,19 @@ public class ShootingBehavior : MonoBehaviour, IAttackBehavior
 
         // Rotación suave hacia el jugador (RotateTowards + LookRotation)
         Transform rotationReference = (aimPoint != null) ? aimPoint : transform;
-        Vector3 lookDirection = targetPosition - rotationReference.position;
+      //  Vector3 lookDirection = targetPosition - rotationReference.position;
         float enemyRotation = config.turnSpeed * Time.deltaTime;
-        Vector3 newLookDirection = Vector3.RotateTowards(rotationReference.forward, lookDirection, enemyRotation, 0f);
+        Vector3 newLookDirection = Vector3.RotateTowards(rotationReference.forward, targetPosition, enemyRotation, 0f);
         rotationReference.rotation = Quaternion.LookRotation(newLookDirection); // actualiza la rotación
+        
 
-        // === Si no está en rango de ataque, no dispares ===
+        // Si no está en rango de ataque, no dispares 
         if (!_canShoot) return;
 
-        // === Cooldown entre ráfagas ===
+        // Cooldown entre ráfagas 
         if (Time.time < _timeSinceLastShot + Mathf.Max(0.01f, config.timeForShoot)) return;
 
-        // === Disparo en ráfaga ===
+        // Disparo en ráfaga 
         _timeSinceLastShot = Time.time;
         if (_burstRoutine != null) StopCoroutine(_burstRoutine);
         _burstRoutine = StartCoroutine(FireBurst(stateManager));
@@ -61,7 +62,8 @@ public class ShootingBehavior : MonoBehaviour, IAttackBehavior
 
         Vector3 target = stateManager.PlayerChecker.GetPlayerPosition() + Vector3.up * config.aimHeight;
         Vector3 dir = target - shootingPoint.position;
-        Instantiate(config.bulletPrefab, shootingPoint.position, Quaternion.LookRotation(dir));
+        Debug.Log(shootingPoint.position);
+        Instantiate(config.bulletPrefab, shootingPoint.position, shootingPoint.rotation);
     }
 }
 

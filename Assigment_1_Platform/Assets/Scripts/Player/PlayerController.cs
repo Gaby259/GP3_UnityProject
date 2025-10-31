@@ -80,9 +80,9 @@ public class PlayerController : MonoBehaviour
         if (_canMove)
         {
             Movement();
+            UpdateFacingRotation();
             Jump();
         }
-        UpdateFacingRotation();
     }
 
 
@@ -230,11 +230,11 @@ public class PlayerController : MonoBehaviour
         {
             _targetRotation = Quaternion.AngleAxis(180f, modelPivot.up);
         }
+        
+        modelPivot.localRotation = _targetRotation;
 
-        Quaternion target = _modelRotation * _targetRotation;
-       
         //Smooth Rotation
-        modelPivot.localRotation = Quaternion.Slerp(modelPivot.localRotation, target, Time.deltaTime * flipSpeed); 
+        //modelPivot.localRotation = Quaternion.Slerp(modelPivot.localRotation, target, Time.deltaTime * flipSpeed); 
         //Quaternion.Slerp makes the turn gradual instead of instant
     }
 
