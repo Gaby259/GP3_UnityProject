@@ -15,6 +15,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5735330410089080507, guid: ea434db718120164baeb280053009183, type: 3}
   turnSpeed: 10
   aimHeight: 1.2
-  burstCount: 3
+  burstCount: 1
   burstInterval: 0.12
   timeForShoot: 1

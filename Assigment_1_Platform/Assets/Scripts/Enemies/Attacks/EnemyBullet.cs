@@ -11,16 +11,15 @@ public class EnemyBullet : Projectile
     {
         PlayerHealth playerHealth = other.GetComponentInParent<PlayerHealth>();
 
-        if (playerHealth == null)
+        if (playerHealth)
         {
             DealDamage(playerHealth);
+            Destroy(gameObject);
         }
-
         if (impactParticles != null)
         {
             Instantiate(impactParticles, transform.position, transform.rotation);
         }
-   
     }
     private void DealDamage(PlayerHealth health)
     {

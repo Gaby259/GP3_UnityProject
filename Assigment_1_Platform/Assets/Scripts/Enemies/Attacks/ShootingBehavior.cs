@@ -20,27 +20,26 @@ public class ShootingBehavior : MonoBehaviour, IAttackBehavior
         if (config == null || stateManager == null || stateManager.PlayerChecker == null) return; //Null checks
         if (shootingPoint == null) return;
         
-        Vector3 playerXZ = stateManager.PlayerChecker.GetPlayerPosition();
-        Vector3 targetPosition = new Vector3(playerXZ.x, transform.position.y, playerXZ.z);
+        Vector3 playerPosition = stateManager.PlayerChecker.GetPlayerPosition();
+        Vector3 targetPosition = playerPosition - transform.position;
+        targetPosition.y = 0f; // no Y leaning 
 
-        // Usa el rango del PlayerChecker (equivalente a tu detectionDistance)
+        //Use Player checker
         _canShoot = stateManager.PlayerChecker.IsPlayerInRange();
 
-        // Rotación suave hacia el jugador (RotateTowards + LookRotation)
-        Transform rotationReference = (aimPoint != null) ? aimPoint : transform;
-      //  Vector3 lookDirection = targetPosition - rotationReference.position;
+        //Rotate Towards Player
         float enemyRotation = config.turnSpeed * Time.deltaTime;
-        Vector3 newLookDirection = Vector3.RotateTowards(rotationReference.forward, targetPosition, enemyRotation, 0f);
-        rotationReference.rotation = Quaternion.LookRotation(newLookDirection); // actualiza la rotación
-        
+        Vector3 newLookDirection = Vector3.RotateTowards(transform.forward, targetPosition.normalized, enemyRotation, 0f);
+        transform.rotation = Quaternion.LookRotation(newLookDirection, Vector3.up);
+           
 
-        // Si no está en rango de ataque, no dispares 
+        // if player is not in range dont shoot
         if (!_canShoot) return;
 
-        // Cooldown entre ráfagas 
+        // Cooldown between bursts
         if (Time.time < _timeSinceLastShot + Mathf.Max(0.01f, config.timeForShoot)) return;
 
-        // Disparo en ráfaga 
+        // Burst routine
         _timeSinceLastShot = Time.time;
         if (_burstRoutine != null) StopCoroutine(_burstRoutine);
         _burstRoutine = StartCoroutine(FireBurst(stateManager));
@@ -59,10 +58,6 @@ public class ShootingBehavior : MonoBehaviour, IAttackBehavior
     {
         if (config == null || config.bulletPrefab == null || shootingPoint == null || stateManager == null || stateManager.PlayerChecker == null)
             return;
-
-        Vector3 target = stateManager.PlayerChecker.GetPlayerPosition() + Vector3.up * config.aimHeight;
-        Vector3 dir = target - shootingPoint.position;
-        Debug.Log(shootingPoint.position);
         Instantiate(config.bulletPrefab, shootingPoint.position, shootingPoint.rotation);
     }
 }
