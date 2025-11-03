@@ -1,8 +1,10 @@
 using UnityEngine;
-
+using UnityEngine.AI;
+[RequireComponent(typeof(NavMeshAgent))]
 public class ChaseState : IState
 {
     private StateManager _stateManager;
+    private NavMeshAgent _navMeshAgent;
 
     public ChaseState  (StateManager stateManager)
     {

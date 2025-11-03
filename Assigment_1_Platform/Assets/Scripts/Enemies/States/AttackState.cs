@@ -1,10 +1,10 @@
  using UnityEngine;
+ using UnityEngine.AI;
 
-public class AttackState : IState
+ public class AttackState : IState
 {
     private StateManager _stateManager;
     private IAttackBehavior _attackBehavior;
-
     public AttackState (StateManager stateManager)
     {
         _stateManager = stateManager;

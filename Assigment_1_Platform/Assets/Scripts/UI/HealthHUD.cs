@@ -20,7 +20,7 @@ public class HealthHUD : MonoBehaviour
 
     private void Awake()
     {
-        if (playerHealth == null) playerHealth = FindObjectOfType<PlayerHealth>();
+        if (playerHealth == null) playerHealth = FindFirstObjectByType<PlayerHealth>();
     }
 
     private void OnEnable()

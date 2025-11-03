@@ -9,7 +9,7 @@ public class InputController : MonoBehaviour
     //Player Controls
     public event Action JumpEvent;
     public event Action<Vector2> MoveEvent;
-    public event Action<Vector2> MouseLookEvent;
+  //  public event Action<Vector2> MouseLookEvent;
     public event Action DashEvent;
     
     private void Awake()

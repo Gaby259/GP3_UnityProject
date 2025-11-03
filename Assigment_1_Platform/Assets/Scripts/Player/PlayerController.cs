@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     
     [Header("Rotation")]
     [SerializeField] private Transform modelPivot;  
-    [SerializeField] private float flipSpeed = 12f;
     private Quaternion _modelRotation;
     private bool _facingRight = true;       
      
@@ -80,8 +79,8 @@ public class PlayerController : MonoBehaviour
         if (_canMove)
         {
             Movement();
-            UpdateFacingRotation();
             Jump();
+            UpdateFacingRotation();
         }
     }
 
@@ -127,7 +126,6 @@ public class PlayerController : MonoBehaviour
     
     private void JumpInput()
     {
-        
         if (IsGrounded())
         {
             _currentVelocity.y = controllerConfig.jumpHeight;
@@ -146,6 +144,7 @@ public class PlayerController : MonoBehaviour
         if (!IsGrounded()) //if the player is not touching the floor do this...
         {
             _currentVelocity.y += Physics.gravity.y * controllerConfig.gravity *Time.deltaTime;
+          //  Debug.Log("Velocity "+_currentVelocity.y);
         }
         _characterController.Move(_currentVelocity * Time.deltaTime);
     
@@ -232,10 +231,7 @@ public class PlayerController : MonoBehaviour
         }
         
         modelPivot.localRotation = _targetRotation;
-
-        //Smooth Rotation
-        //modelPivot.localRotation = Quaternion.Slerp(modelPivot.localRotation, target, Time.deltaTime * flipSpeed); 
-        //Quaternion.Slerp makes the turn gradual instead of instant
+        
     }
 
 }

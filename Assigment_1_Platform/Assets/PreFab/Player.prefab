@@ -275,7 +275,6 @@ MonoBehaviour:
     m_Bits: 0
   controllerConfig: {fileID: 11400000, guid: 2d6bd86ee660eed44a0753a6a5a0945b, type: 2}
   modelPivot: {fileID: 2315320580920495261}
-  flipSpeed: 12
 --- !u!114 &2796920781391171754
 MonoBehaviour:
   m_ObjectHideFlags: 0
