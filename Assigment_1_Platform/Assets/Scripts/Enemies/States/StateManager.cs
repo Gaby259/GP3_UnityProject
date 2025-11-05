@@ -13,13 +13,17 @@ public class StateManager : MonoBehaviour
        public AlertState AlertState => _alertState;
        public ChaseState ChaseState => _chaseState;
        public AttackState Attack => _attackState;
-       
-       
+
+       [Header("Behavior on sight")]
+       [SerializeField] private bool chaseOnSight = false; //Shooting enemy = false; chaser enemy = true\
+       public bool ChaseOnSight => chaseOnSight;
+
        //Reference to components
        [SerializeField] private PlayerChecker playerChecker;
        public PlayerChecker PlayerChecker => playerChecker;
        [SerializeField] private CharacterMover characterMover;
        public CharacterMover CharacterMover => characterMover;
+    
        
        //Keep track of the current state 
        private IState _currentState;

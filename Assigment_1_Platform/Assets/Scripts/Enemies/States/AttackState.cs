@@ -28,8 +28,11 @@
         // If the player leaves range, go back to Chase or Patrol
         if (!_stateManager.PlayerChecker.IsPlayerInRange())
         {
-            _stateManager.ChangeState(_stateManager.ChaseState);
-            return;
+            if (_stateManager.ChaseOnSight)
+            {
+                _stateManager.ChangeState(_stateManager.ChaseState);
+                return;
+            }
         }
 
         // Otherwise, try to attack

@@ -22,9 +22,14 @@ public class PatrolState : IState
     {
         //TODO: Add fixed update logic 
         // check for the player in range
-        if (_stateManager.PlayerChecker.IsPlayerInRange())
+        if (!_stateManager.PlayerChecker.IsPlayerInRange()) return;
+        if(_stateManager.ChaseOnSight)
         {
             _stateManager.ChangeState(_stateManager.ChaseState);
+        }
+        else
+        {
+            _stateManager.ChangeState(_stateManager.Attack);
         }
     }
 
