@@ -11,6 +11,8 @@ public class PlayerHealth : MonoBehaviour
    
    public int CurrentHealth => _currentHealth; // => means a property / if other scripts wants to know, will reference this variable
    public int MaxHealth => maxHealth;
+   public bool isInvulnerable = false;
+   public void SetInvulnerable(bool value) => isInvulnerable = value;
 
    private void Awake()
    {
@@ -23,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
    }
    public void TakeDamage(int damage)
    {
+      if (isInvulnerable) return;
       _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth); //Mathf.Max Dont go over
       Debug.Log("Take damage= " + damage +"current Health = " +  _currentHealth);
       //Notify all observer of health damage
@@ -43,8 +46,9 @@ public class PlayerHealth : MonoBehaviour
       OnHealthChanged?.Invoke(_currentHealth, maxHealth);
       Debug.Log($"Healed {amount}");
    }
+   
 
-   // Optional: change max health later (kept simple)
+   // Optional: change max health late
    public void SetMaxHealth(int newMax, bool fillToMax = true)
    {
       maxHealth = Mathf.Max(1, newMax);

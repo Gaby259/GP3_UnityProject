@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3352672858895149897}
   - component: {fileID: 8880232590263834593}
   - component: {fileID: 6892045011568500082}
+  - component: {fileID: 3326577851550263256}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -104,12 +105,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3326577851550263256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3946354858319440576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088dd25badfca5043b0f29b9276f97ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
 --- !u!1 &4489921557757874684
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +136,7 @@ GameObject:
   - component: {fileID: 3284779707698506081}
   - component: {fileID: 6036108016395572486}
   - component: {fileID: 5005826112238886283}
+  - component: {fileID: 7134574901872146840}
   m_Layer: 0
   m_Name: ShootingEnemy
   m_TagString: Untagged
@@ -157,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040a9a26a5df7f84ca9149029331b02b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chaseOnSight: 0
   playerChecker: {fileID: 6036108016395572486}
   characterMover: {fileID: 0}
 --- !u!114 &6036108016395572486
@@ -188,6 +204,19 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: a12e7f5bec4b8774aafff251dd61d057, type: 2}
   shootingPoint: {fileID: 3312322644651365284}
   aimPoint: {fileID: 5517100346292375380}
+--- !u!114 &7134574901872146840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489921557757874684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088dd25badfca5043b0f29b9276f97ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
 --- !u!1 &4523938783650226365
 GameObject:
   m_ObjectHideFlags: 0
