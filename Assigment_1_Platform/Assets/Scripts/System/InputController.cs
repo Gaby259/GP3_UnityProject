@@ -82,12 +82,12 @@ public class InputController : MonoBehaviour
     
     private void OnHealPerformed(InputAction.CallbackContext context)
     {
-        AttackEvent?.Invoke();
+       HealEvent?.Invoke();
     }
     
     private void OnHealCancelled(InputAction.CallbackContext context)
     {
-        AttackEventCancelled?.Invoke();
+        HealEventCancelled?.Invoke();
     }
     
 }

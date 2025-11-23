@@ -28,13 +28,19 @@ public class PlayerController : MonoBehaviour
     [Header("Rotation")]
     [SerializeField] private Transform modelPivot;  
     private Quaternion _modelRotation;
-    private bool _facingRight = true;       
+    private bool _facingRight = true; 
+    
+    [Header("Health")]
+    private PlayerStamina _stamina;
+    private PlayerHealth _health;
      
 
    void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _inputController = GetComponent<InputController>();
+        _stamina = GetComponent<PlayerStamina>();  
+        _health = GetComponent<PlayerHealth>();    
     }
 
     void OnEnable()
@@ -44,6 +50,7 @@ public class PlayerController : MonoBehaviour
             _inputController.MoveEvent += MovementInput;
             _inputController.JumpEvent += JumpInput;
             _inputController.DashEvent +=DashPressed;
+            _inputController.HealEvent += HealPressed; 
         }
     }
     private void OnDisable() // this is for handling the error MissingReferenceException
@@ -53,6 +60,7 @@ public class PlayerController : MonoBehaviour
             _inputController.MoveEvent -= MovementInput;
             _inputController.JumpEvent -= JumpInput;
             _inputController.DashEvent -= DashPressed;
+            _inputController.HealEvent -= HealPressed;
         }
     }
 
@@ -232,6 +240,14 @@ public class PlayerController : MonoBehaviour
         
         modelPivot.localRotation = _targetRotation;
         
+    }
+    
+    private void HealPressed()
+    {
+        if (_stamina.Heal(_health))
+            Debug.Log("Player healed!");
+        else
+            Debug.Log("Not enough stamina!");
     }
 
 }

@@ -535,6 +535,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d99e1ca2-c58e-4324-8fc4-2f696e2d05b7",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "582ab780-cf7b-4ec7-8387-d697fce6279c",
                     "path": "<Keyboard>/c",
                     "interactions": "",
