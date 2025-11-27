@@ -16,7 +16,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        Debug.Log($"{gameObject.name} took {amount} damage! Remaining: {currentHealth}");
 
         if (currentHealth <= 0)
             Die();
@@ -25,7 +24,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void Die()
     {
         // Aquí puedes poner animación de muerte, efecto de partículas, etc.
-        Debug.Log($"{gameObject.name} has been destroyed!");
+       
         Destroy(gameObject);
     }
 }

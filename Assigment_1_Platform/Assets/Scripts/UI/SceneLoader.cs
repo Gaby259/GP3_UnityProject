@@ -35,5 +35,5 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
 #endif
     }
-    
+
 }

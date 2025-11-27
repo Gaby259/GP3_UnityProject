@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2315320580920495261}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ModelPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,9 +29,41 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 988473076502353810}
   - {fileID: 5123515059449676695}
   m_Father: {fileID: 746526625648906008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2179269399805913516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 988473076502353810}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &988473076502353810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2179269399805913516}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 1.052, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2315320580920495261}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &3643246847164207242
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +75,7 @@ GameObject:
   - component: {fileID: 5123515059449676695}
   - component: {fileID: 5104769781428886977}
   - component: {fileID: 9130939683149064569}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bunny
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +91,7 @@ Transform:
   m_GameObject: {fileID: 3643246847164207242}
   serializedVersion: 2
   m_LocalRotation: {x: -0.13096233, y: 0.7004331, z: 0.6896488, w: 0.12894596}
-  m_LocalPosition: {x: -0.1508398, y: -0.28, z: 0.025959043}
+  m_LocalPosition: {x: -0.1508398, y: -0.178, z: 0.024}
   m_LocalScale: {x: 38.457916, y: 36.4157, z: 36.929104}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -134,7 +166,9 @@ GameObject:
   - component: {fileID: 6462868254357936387}
   - component: {fileID: 2796920781391171754}
   - component: {fileID: 1987560721705305794}
-  m_Layer: 0
+  - component: {fileID: 2247008609414680923}
+  - component: {fileID: 1613083961241315546}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -272,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   controllerConfig: {fileID: 11400000, guid: 2d6bd86ee660eed44a0753a6a5a0945b, type: 2}
   modelPivot: {fileID: 2315320580920495261}
 --- !u!114 &2796920781391171754
@@ -300,3 +334,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  isInvulnerable: 0
+--- !u!114 &2247008609414680923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474982170561109951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7614ec352eabd4ebf7059b7ec46d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 988473076502353810}
+  defaultShootingStrategy: {fileID: 11400000, guid: dbce1f990bfc1054698b65a7aa5c47bf, type: 2}
+--- !u!114 &1613083961241315546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6474982170561109951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59cb2ebcd123478449add7dddd4ab368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  regenRate: 10
+  regenDelay: 1
+  healStaminaCost: 100
+  healAmount: 1

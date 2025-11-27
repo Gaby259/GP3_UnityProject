@@ -4,11 +4,11 @@ using UnityEngine;
 public class PlayerStamina : MonoBehaviour
 {
     public event System.Action<float, float> OnStaminaChanged;
-
+    
     [Header("Stamina Settings")]
     [SerializeField] private float maxStamina = 100f;
-    [SerializeField] private float regenRate = 10f; // stamina per second
-    [SerializeField] private float regenDelay = 1f; // ⏳ tiempo antes de regenerar
+    [SerializeField] private float regenRate = 10f; 
+    [SerializeField] private float regenDelay = 1f; 
 
     [Header("Healing Settings")]
     [SerializeField] private float healStaminaCost = 25f;
@@ -33,7 +33,7 @@ public class PlayerStamina : MonoBehaviour
     
     private void StartRegenWithDelay()
     {
-        // detener todo si el jugador gasta stamina seguido
+        // Start regenerate the stamina BUT player cant use it if the delay is not complete
         if (regenCoroutine != null)
         {
             StopCoroutine(regenCoroutine);
@@ -50,23 +50,17 @@ public class PlayerStamina : MonoBehaviour
 
     private IEnumerator RegenDelay()
     {
-        // ⏳ espera antes de regenerar
         yield return new WaitForSeconds(regenDelay);
-
-        // luego empieza la regeneración real
-        regenCoroutine = StartCoroutine(Regenerate());
-
+        regenCoroutine = StartCoroutine(RegenerateHealth());
         delayCoroutine = null;
     }
 
-    private IEnumerator Regenerate()
+    private IEnumerator RegenerateHealth()
     {
-        // regenera lentamente hasta llenarse
         while (_currentStamina < maxStamina)
         {
             _currentStamina += regenRate * Time.deltaTime;
             _currentStamina = Mathf.Clamp(_currentStamina, 0, maxStamina);
-
             OnStaminaChanged?.Invoke(_currentStamina, maxStamina);
 
             yield return null;
@@ -82,8 +76,6 @@ public class PlayerStamina : MonoBehaviour
 
         _currentStamina -= cost;
         OnStaminaChanged?.Invoke(_currentStamina, maxStamina);
-
-        // cada vez que gastas stamina → reinicia el delay
         StartRegenWithDelay();
 
         return true;

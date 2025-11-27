@@ -7,9 +7,15 @@ public class BulletStrategy : ShootingStrategy
     [SerializeField] private float fireRate = 6f;
     private float _nextAllowedFireTime;
 
-    public override void Shoot(Transform shootPoint)
-    {
-        if (!bulletPrefab || !shootPoint) return;
-        Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-    }
+   public override void Shoot(Transform shootPoint)
+{
+    if (!bulletPrefab || !shootPoint) return;
+    
+    if (Time.time < _nextAllowedFireTime)
+        return;
+    
+    _nextAllowedFireTime = Time.time + (1f / fireRate);
+    Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+}
+
 }

@@ -244,10 +244,8 @@ public class PlayerController : MonoBehaviour
     
     private void HealPressed()
     {
-        if (_stamina.Heal(_health))
-            Debug.Log("Player healed!");
-        else
-            Debug.Log("Not enough stamina!");
+        _stamina.Heal(_health);
+
     }
 
 }

@@ -13,8 +13,7 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent OnShouldStartLava;           //Notify the LavaManager
     public UnityEvent OnWin;
     public UnityEvent OnLose;
-
-    private bool _lavaStarted = false;
+    
     
     public void AddRareItem()
     {

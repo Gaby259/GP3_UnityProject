@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6229303642744815520}
   - component: {fileID: 1776614072966636838}
   - component: {fileID: 7197957701121904455}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ChaserEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 3281035360731388883}
   - component: {fileID: 6338017029549645096}
   - component: {fileID: 1435905698166546546}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,6 +320,10 @@ PrefabInstance:
     - target: {fileID: 2069216400253424661, guid: 4ae8ba521fae5c64d817ee69aeaa79ee, type: 3}
       propertyPath: m_Name
       value: HurtBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069216400253424661, guid: 4ae8ba521fae5c64d817ee69aeaa79ee, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2069216400253424661, guid: 4ae8ba521fae5c64d817ee69aeaa79ee, type: 3}
       propertyPath: m_IsActive

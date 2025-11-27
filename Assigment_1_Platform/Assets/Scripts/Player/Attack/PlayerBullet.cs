@@ -11,7 +11,6 @@ public class PlayerBullet : Projectile
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) return;
-
         // Damage objects that have the IDamageable script 
         IDamageable damageable = other.GetComponentInParent<IDamageable>();
         if (damageable != null)

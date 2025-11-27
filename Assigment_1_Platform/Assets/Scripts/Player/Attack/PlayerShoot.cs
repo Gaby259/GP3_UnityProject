@@ -9,9 +9,6 @@ public class PlayerShoot : MonoBehaviour
     [Header("Strategy Config")]
     [SerializeField] private ShootingStrategy defaultShootingStrategy;
     
-    [Header("Fire Rate")]
-    [SerializeField] private float shotsPerSecond = 8f; // 8 = una bala cada 0.125 s
-    private float _nextShotTime = 0f;
     private ShootingStrategy _currentShootingStrategy;
     private InputController _inputController;
 
@@ -42,6 +39,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void HandleShootInput()
     {
+        Debug.Log("Shooting");
         _currentShootingStrategy?.Shoot(shootPoint);
     }
     public void SetShootingStrategy(ShootingStrategy newStrategy)
@@ -49,7 +47,6 @@ public class PlayerShoot : MonoBehaviour
         if (newStrategy == null) return;
 
         _currentShootingStrategy = newStrategy;
-        Debug.Log($"Shooting strategy changed to {_currentShootingStrategy.ShootingStrategyName}");
         OnShootingStrategyChanged?.Invoke(_currentShootingStrategy.ShootingStrategyName);
     }
 }

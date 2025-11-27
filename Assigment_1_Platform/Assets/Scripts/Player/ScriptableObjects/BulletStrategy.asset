@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShootingStrategyName: Default
   bulletPrefab: {fileID: 9022003556847160968, guid: 513f97c9a5df00f4b9b4bbf8f75b6f3e, type: 3}
-  fireRate: 6
+  fireRate: 2

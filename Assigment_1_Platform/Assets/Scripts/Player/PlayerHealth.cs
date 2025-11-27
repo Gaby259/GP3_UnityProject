@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-   //Event declaration using Action delegates 
+   //Event declaration using Action delegates
+   [SerializeField] private int maxHealth;
    public event System.Action<int, int> OnHealthChanged; //current health & max health
    public event System.Action OnPlayerDeath;
    
    private int _currentHealth;
-  [SerializeField] private int maxHealth;
    
    public int CurrentHealth => _currentHealth; // => means a property / if other scripts wants to know, will reference this variable
    public int MaxHealth => maxHealth;
@@ -16,12 +16,12 @@ public class PlayerHealth : MonoBehaviour
 
    private void Awake()
    {
-      _currentHealth = maxHealth;                 // ya arranca lleno ANTES que la UI
+      _currentHealth = maxHealth;               
    }
 
    private void Start()
    {
-      OnHealthChanged?.Invoke(_currentHealth, maxHealth); // notifica a la UI
+      OnHealthChanged?.Invoke(_currentHealth, maxHealth); // notifies the UI
    }
    public void TakeDamage(int damage)
    {
@@ -37,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
          OnPlayerDeath?.Invoke();
       }
    }
-   //when energy bar is created call this function if the player wants to heal back 
+   
    public void Heal(int amount)
    {
       if (amount <= 0 || _currentHealth <= 0) return;

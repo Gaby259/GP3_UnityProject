@@ -8,13 +8,11 @@ public class PlayerStaminaUI : MonoBehaviour
 
     private void Start()
     {
-        _stamina = FindObjectOfType<PlayerStamina>();
-
-        // Setup inicial
+        _stamina = FindFirstObjectByType<PlayerStamina>();
         staminaSlider.maxValue = _stamina.MaxStamina;
         staminaSlider.value = _stamina.CurrentStamina;
 
-        // Evento
+        //stamina subscribes to the function
         _stamina.OnStaminaChanged += UpdateStaminaUI;
     }
 
