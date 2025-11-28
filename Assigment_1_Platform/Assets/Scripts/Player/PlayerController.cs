@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
             _inputController.JumpEvent += JumpInput;
             _inputController.DashEvent +=DashPressed;
             _inputController.HealEvent += HealPressed; 
+            
         }
     }
     private void OnDisable() // this is for handling the error MissingReferenceException
@@ -246,6 +247,15 @@ public class PlayerController : MonoBehaviour
     {
         _stamina.Heal(_health);
 
+    }
+
+    public void SetMovementEnable(bool enable)
+    {
+        _canMove = enable;
+        if (!enable)
+        {
+            _currentVelocity = Vector3.zero;
+        }
     }
 
 }
