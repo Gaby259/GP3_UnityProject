@@ -11,11 +11,9 @@ public class InputController : MonoBehaviour
     public event Action<Vector2> MoveEvent;
     public event Action DashEvent;
     public event Action ShieldEvent;
-    public event Action ShieldEventCancelled;
     public event Action AttackEvent;
-    public event Action AttackEventCancelled;
+
     public event Action HealEvent;
-    public event Action HealEventCancelled;
     private void Awake()
     {
         _gameControls = new GameControls();

@@ -17,14 +17,6 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded;
     private bool _canMove = true;
     
-    [Header("Dash")]
-    private bool _isDashing = false;
-    private bool _hasAirDashed = false;
-    private Vector3 _dashDirection;
-    private float _dashTimeLeft = 0f;
-    private float _dashCooldownLeft = 0f;
-    private bool _canDash = true;
-    
     [Header("Rotation")]
     [SerializeField] private Transform modelPivot;  
     private Quaternion _modelRotation;
@@ -49,7 +41,6 @@ public class PlayerController : MonoBehaviour
         {
             _inputController.MoveEvent += MovementInput;
             _inputController.JumpEvent += JumpInput;
-            _inputController.DashEvent +=DashPressed;
             _inputController.HealEvent += HealPressed; 
             
         }
@@ -60,7 +51,6 @@ public class PlayerController : MonoBehaviour
         {
             _inputController.MoveEvent -= MovementInput;
             _inputController.JumpEvent -= JumpInput;
-            _inputController.DashEvent -= DashPressed;
             _inputController.HealEvent -= HealPressed;
         }
     }
@@ -77,14 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Restart the dash when player touches the floor
-        if (IsGrounded() && !_canDash)
-        {
-            _canDash = true;
-            _hasAirDashed = false;
-        }
-
-        HandleDash();
+        
         if (_canMove)
         {
             Movement();
@@ -158,55 +141,7 @@ public class PlayerController : MonoBehaviour
         _characterController.Move(_currentVelocity * Time.deltaTime);
     
     }
-
-    private void DashPressed()
-    {
-        if (!_canDash || _dashCooldownLeft > 0f) return;
-
-        if (!IsGrounded())
-        {
-            if (!controllerConfig.allowAirDash || _hasAirDashed) return;
-            _hasAirDashed = true;
-        }
-
-        _isDashing = true;
-        _canDash = false;
-        _dashTimeLeft = controllerConfig.dashDuration;
-        _dashCooldownLeft = controllerConfig.dashCooldown;
     
-        Vector3 dashInput = transform.right * _moveInput.x;
-        if (dashInput == Vector3.zero) dashInput = transform.right;
-        Debug.DrawRay(transform.position, _dashDirection * 5f, Color.red);
-
-        _dashDirection = dashInput.normalized;
-
-        Debug.Log("Dash started");
-    }
-    private void HandleDash()
-    {
-        // Resets the dash if the player touches the ground
-        if (IsGrounded() && !_canDash) //Player is in the ground but CAN'T dash
-        {
-            _canDash = true;
-            _hasAirDashed = false; //Resets the air Dash
-        }
-        //Dash Cooldown
-        if (_dashCooldownLeft > 0f)
-        {
-            _dashCooldownLeft -= Time.deltaTime;
-        }
-        //The dash is activated
-        if (_canDash && _isDashing)
-        {
-            _characterController.Move(_dashDirection * controllerConfig.dashSpeed * Time.deltaTime);
-            _dashTimeLeft -= Time.deltaTime;
-            if (_dashTimeLeft <= 0f)
-            {
-                _isDashing = false;
-            }
-        }
-    }
-
     private void UpdateFacingRotation()
     {
         if (!modelPivot)
