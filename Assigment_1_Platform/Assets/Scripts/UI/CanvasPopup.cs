@@ -7,20 +7,19 @@ public class CanvasPopup : MonoBehaviour
 {
     [SerializeField] private Image  _image;
     [SerializeField] private Transform _popUplocation;
-    private float _fadeduration = 2f; 
+    private float _fadeDuration = 0.5f;
     
-
     private void Start()
     {
-        _image.gameObject.SetActive(false);
+        Color color = _image.color;
+        color.a = 0;
+        _image.color = color;
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            _image.gameObject.SetActive(true);
-            
-            
+           FadeIn();
         }
         
     }
@@ -29,8 +28,16 @@ public class CanvasPopup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _image.gameObject.SetActive(false);
+            FadeOut();
         }
+    }
+    private void FadeIn()
+    {
+        _image.DOFade(1f, _fadeDuration).SetEase(Ease.Linear);
+    }
+    private void FadeOut()
+    {
+        _image.DOFade(0f, _fadeDuration).SetEase(Ease.Linear);
     }
 }
 
