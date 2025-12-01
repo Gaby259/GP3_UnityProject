@@ -67,15 +67,32 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        
-        if (_canMove)
+        // Pause or any other state will not have movement
+        if (!IsGameplayActive())
         {
-            Movement();
-            Jump();
-            UpdateFacingRotation();
+            _moveInput = Vector2.zero;
+            _currentVelocity = Vector3.zero;
+            return;
         }
+
+        // if player is not using the shield move 
+        if (!_canMove)
+        {
+            _moveInput = Vector2.zero;
+            _currentVelocity = Vector3.zero;
+            return;
+        }
+
+        //if the current state is the correct and is not using the shield move
+        Movement();
+        Jump();
+        UpdateFacingRotation();
     }
 
+    private bool IsGameplayActive()
+    {
+        return GameStateManager.Instance.CurrentState == GameStateManager.Instance.PlayingState;
+    }
 
     private void MovementInput (Vector2 movement)
     {

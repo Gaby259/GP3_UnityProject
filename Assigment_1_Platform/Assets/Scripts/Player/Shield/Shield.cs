@@ -5,51 +5,56 @@ public class Shield : MonoBehaviour
     [SerializeField] private GameObject shieldPrefab;
 
     private InputController _inputController;
-    private GameObject _shieldEffectInstance;
     private PlayerController _playerController;
     private PlayerHealth _playerHealth;
+
+    private GameObject _shieldInstance;
 
     private void Start()
     {
         _playerController = FindFirstObjectByType<PlayerController>();
         _playerHealth = _playerController.GetComponent<PlayerHealth>();
         _inputController = _playerController.GetComponent<InputController>();
-        _inputController.ShieldEvent += ActivateShield;
-        _inputController.ShieldEvent -= DeactivateShield;
+
+        _inputController.ShieldActivateEvent += ActivateShield;
+        _inputController.ShieldDeactivateEvent += DeactivateShield;
     }
 
     private void OnDisable()
     {
         if (_inputController != null)
         {
-            _inputController.ShieldEvent -= ActivateShield;
-            _inputController.ShieldEvent += DeactivateShield;
+            _inputController.ShieldActivateEvent -= ActivateShield;
+            _inputController.ShieldDeactivateEvent -= DeactivateShield;
         }
     }
 
     private void ActivateShield()
     {
-        Debug.Log("Shield activated");
+        Debug.Log("Shield Activated (HOLD)");
+
+        if (_shieldInstance == null)
+        {
+            _shieldInstance = Instantiate(shieldPrefab, _playerController.transform);
+            _shieldInstance.transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            _shieldInstance.SetActive(true);
+        }
+
         _playerController.SetMovementEnable(false);
         _playerHealth.isInvulnerable = true;
-
-        if (shieldPrefab != null && _shieldEffectInstance == null)
-        {
-            _shieldEffectInstance = Instantiate(shieldPrefab, _playerController.transform);
-            _shieldEffectInstance.transform.localPosition = Vector3.zero;
-        }
     }
 
     private void DeactivateShield()
     {
-        Debug.Log("Shield destroyed");
+        Debug.Log("Shield Deactivated (RELEASE)");
+
+        if (_shieldInstance != null)
+            _shieldInstance.SetActive(false);
+
         _playerController.SetMovementEnable(true);
         _playerHealth.isInvulnerable = false;
-
-        if (_shieldEffectInstance != null)
-        {
-            Destroy(_shieldEffectInstance);
-            _shieldEffectInstance = null;
-        }
     }
 }

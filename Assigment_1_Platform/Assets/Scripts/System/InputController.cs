@@ -10,10 +10,12 @@ public class InputController : MonoBehaviour
     public event Action JumpEvent;
     public event Action<Vector2> MoveEvent;
     public event Action DashEvent;
-    public event Action ShieldEvent;
+    public event Action ShieldActivateEvent;    
+    public event Action ShieldDeactivateEvent;
     public event Action AttackEvent;
-
     public event Action HealEvent;
+    
+    public event Action PauseEvent;
     private void Awake()
     {
         _gameControls = new GameControls();
@@ -29,7 +31,9 @@ public class InputController : MonoBehaviour
         _gameControls.Player.Dash.performed += OnDashPerformed;
         _gameControls.Player.Attack.performed += OnAttackPerformed;
         _gameControls.Player.Heal.performed += OnHealPerformed;
-        _gameControls.Player.Shield.performed += OnShieldPerformed;;
+        _gameControls.Player.Shield.performed += OnShieldPerformed;
+        _gameControls.Player.Shield.canceled += OnShieldCancelled;
+        _gameControls.Player.Pause.performed += OnPausePerformed;
 
 
     }
@@ -57,9 +61,13 @@ public class InputController : MonoBehaviour
     
     private void OnShieldPerformed(InputAction.CallbackContext context)
     {
-        ShieldEvent?.Invoke();
+        ShieldActivateEvent?.Invoke();
     }
-    
+
+    private void OnShieldCancelled(InputAction.CallbackContext context)
+    {
+        ShieldDeactivateEvent?.Invoke();
+    }
     
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
@@ -71,6 +79,10 @@ public class InputController : MonoBehaviour
     {
        HealEvent?.Invoke();
     }
-    
+
+    private void OnPausePerformed(InputAction.CallbackContext context)
+    {
+        PauseEvent?.Invoke();
+    }
     
 }
