@@ -8,16 +8,28 @@ public class ButtonsTest : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [SerializeField] float duration = 0.2f;
     [SerializeField] private float buttonScale = 2.0f;
     
+    private Vector3 _originalScale;
+
+    private void Awake()
+    {
+        _originalScale = transform.localScale; // Save the original scale of the button 
+    }
+
+    private void OnEnable()
+    {
+        transform.localScale = _originalScale;
+    }
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _tween= this.transform.DOScale(buttonScale, duration);
+        _tween= this.transform.DOScale(buttonScale, duration).SetUpdate(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _tween?.Kill();// Must kill old tween
         //Previous transform is PERMANENT, not just an animation. so we scale it back by hand
-        this.transform.DOScale(1f, duration);
+        this.transform.DOScale(1f, duration).SetUpdate(false);
     }
 
     public void OnClick()
@@ -29,4 +41,6 @@ public class ButtonsTest : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         //Add a horizontal relative move tween that will last the whole Sequence's duration 
         sequence.SetLoops(-1, LoopType.Yoyo);
     }
+    
+    
 }
