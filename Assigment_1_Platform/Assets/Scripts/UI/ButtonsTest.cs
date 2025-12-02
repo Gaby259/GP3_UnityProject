@@ -29,7 +29,7 @@ public class ButtonsTest : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         _tween?.Kill();// Must kill old tween
         //Previous transform is PERMANENT, not just an animation. so we scale it back by hand
-        this.transform.DOScale(1f, duration).SetUpdate(false);
+        this.transform.DOScale(_originalScale, duration).SetUpdate(true);
     }
 
     public void OnClick()
