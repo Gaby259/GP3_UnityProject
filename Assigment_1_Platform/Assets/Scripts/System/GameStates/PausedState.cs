@@ -10,11 +10,7 @@ public class PausedState : IGameStates
         _manager = manager;
         _pauseMenuUI = ui;
     }
-
-    public void Awake()
-    {
-        _pauseMenuUI.SetActive(false);
-    }
+    
     public void Enter()
     {
         Time.timeScale = 0;

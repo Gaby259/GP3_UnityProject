@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenuUI : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     [Header("Buttons")]
     [SerializeField] private Button resumeButton;
@@ -28,8 +28,9 @@ public class PauseMenuUI : MonoBehaviour
         // Open Confirmation Popup
         mainMenuButton.onClick.AddListener(() =>
         {
+            
+            GameStateManager.Instance.ChangeState(GameStateManager.Instance.ConfirmReturnState);
             confirmPopup.SetActive(true);
-           // GameStateManager.Instance.ChangeState(GameStateManager.Instance.ConfirmReturnState);
         });
     }
 }

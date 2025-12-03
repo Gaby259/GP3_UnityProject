@@ -12,7 +12,7 @@ public class GameStateManager : MonoBehaviour
     public GameObject confirmPopupUI;
 
     // States
-  //  public MainMenuState MainMenuState { get; private set; }
+    public ConfirmReturnState ConfirmReturnState { get; private set; }
     public PlayingState PlayingState { get; private set; }
     public PausedState PausedState { get; private set; }
   //  public ControlsMenuState ControlsMenuState { get; private set; }
@@ -26,7 +26,7 @@ public class GameStateManager : MonoBehaviour
         Input = GameObject.FindFirstObjectByType<InputController>();
 
         // Initialize states
-  //      MainMenuState = new MainMenuState(this);
+        ConfirmReturnState= new ConfirmReturnState(this, confirmPopupUI);
         PlayingState = new PlayingState(this);
         PausedState = new PausedState(this, pauseMenuUI);
   //      ControlsMenuState = new ControlsMenuState(this);
@@ -37,6 +37,7 @@ public class GameStateManager : MonoBehaviour
     {
       ChangeState(PlayingState);
       pauseMenuUI.SetActive(false);
+      confirmPopupUI.SetActive(false);
     }
 
     private void Update()
