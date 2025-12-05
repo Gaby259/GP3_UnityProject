@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class CollectableItem : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class CollectableItem : MonoBehaviour
     public UnityEvent<int> OnPoinstAward;
 
     [SerializeField] private int _pointValue = 5;
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

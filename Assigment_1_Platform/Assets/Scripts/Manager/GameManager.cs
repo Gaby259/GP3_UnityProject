@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -14,7 +15,18 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent OnWin;
     public UnityEvent OnLose;
     
+    private void Start()
+    {
+        PlayerHealth player = FindFirstObjectByType<PlayerHealth>();
+
+        if (player != null)
+        {
+            Debug.Log("Player found");
+            player.OnPlayerDeath += HandlePlayerDeath;
+        }
+    }
     
+
     public void AddRareItem()
     {
         _rareItems++;
@@ -32,15 +44,22 @@ public class GameManager : Singleton<GameManager>
     {
         OnWin?.Invoke();
         Debug.Log("Win");
+        SceneManager.LoadScene("VictoryScene");
         //UI for victory
     }
 
+    private void HandlePlayerDeath()
+    {
+        Lose();
+    }
     public void Lose()
     {
         OnLose?.Invoke();
         Debug.Log("Lose");
+        SceneManager.LoadScene("LoseScene");
         //UI for loosing
     }
+    
 }
 /*
 General item collection flow:
