@@ -16,11 +16,12 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         // Start game
+        SoundManager.PlayMusic("MainMenu");
         _startButton.onClick.AddListener(() =>
         {
             SceneManager.LoadScene("SampleScene");
+            SoundManager.StopMusic();
         });
-
         // Show confirmation popup
         _quitButton.onClick.AddListener(() =>
         {

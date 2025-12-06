@@ -22,6 +22,7 @@ public class ButtonsTest : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        SoundManager.PlaySFX("Button Hover");
         _tween= this.transform.DOScale(buttonScale, duration).SetUpdate(true);
     }
 

@@ -31,7 +31,6 @@ public class Shield : MonoBehaviour
 
     private void ActivateShield()
     {
-        Debug.Log("Shield Activated (HOLD)");
 
         if (_shieldInstance == null)
         {
@@ -41,6 +40,7 @@ public class Shield : MonoBehaviour
         else
         {
             _shieldInstance.SetActive(true);
+            SoundManager.PlaySFX("Shield");
         }
 
         _playerController.SetMovementEnable(false);
@@ -49,7 +49,6 @@ public class Shield : MonoBehaviour
 
     private void DeactivateShield()
     {
-        Debug.Log("Shield Deactivated (RELEASE)");
 
         if (_shieldInstance != null)
             _shieldInstance.SetActive(false);

@@ -20,7 +20,7 @@ public class PlayingState : IGameStates
 
     public void Update()
     {
-        //Do noting
+        //Do nothing
     }
 
     public void Exit()

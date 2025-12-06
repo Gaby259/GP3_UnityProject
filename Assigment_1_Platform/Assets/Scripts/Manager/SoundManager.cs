@@ -1,21 +1,23 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    private static SoundManager _instance;
-    private static AudioSource _audioSource;
-    private static SoundLibrary _soundLibrary; 
-    private Slider volumeSlider;//Manage volume 
+    private static AudioSource _musicSource;
+    private static AudioSource _sfxSource;
+    private static SoundLibrary _library;
 
     private void Awake()
     {
-        if (_instance == null)
+        if (Instance == null)
         {
-            _instance = this;
-            _audioSource = GetComponent<AudioSource>();
-            _soundLibrary = GetComponent<SoundLibrary>();
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
+
+            AudioSource[] sources = GetComponents<AudioSource>();
+            
+            _musicSource = sources[0]; // Loop, música
+            _sfxSource = sources[1];   // PlayOneShot, SFX
+
+            _library = GetComponent<SoundLibrary>();
         }
         else
         {
@@ -23,27 +25,28 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    private void Start()
+    // 🎵 MUSICA
+    public static void PlayMusic(string name)
     {
-     // volumeSlider.onValueChanged.AddListener(delegate{OnVolumeChanged();}); When the volume slides is created use this
+        AudioClip clip = _library.GetRandom(name);
+        if (clip == null) return;
+
+        _musicSource.clip = clip;
+        _musicSource.loop = true;
+        _musicSource.Play();
     }
 
-    public static void Play(string soundName)
+    public static void StopMusic()
     {
-        AudioClip audioClip = _soundLibrary.GetRandom(soundName);
-        if (audioClip != null)
-        {
-            _audioSource.PlayOneShot(audioClip);
-        }
+        _musicSource.Stop();
     }
 
-    private static void SetVolume(float volume)
+    // 🔊 EFECTOS
+    public static void PlaySFX(string name)
     {
-        _audioSource.volume = volume;
-    }
+        AudioClip clip = _library.GetRandom(name);
+        if (clip == null) return;
 
-    private void OnVolumeChanged()
-    {
-        SetVolume(volumeSlider.value);
+        _sfxSource.PlayOneShot(clip);
     }
 }

@@ -44,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
 
       _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, maxHealth);
       OnHealthChanged?.Invoke(_currentHealth, maxHealth);
-      Debug.Log($"Healed {amount}");
+      SoundManager.PlaySFX("Healing");
    }
    
 

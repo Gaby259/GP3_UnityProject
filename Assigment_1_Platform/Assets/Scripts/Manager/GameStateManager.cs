@@ -38,6 +38,7 @@ public class GameStateManager : MonoBehaviour
       ChangeState(PlayingState);
       pauseMenuUI.SetActive(false);
       confirmPopupUI.SetActive(false);
+      SoundManager.PlayMusic("Gameplay");
     }
 
     private void Update()
