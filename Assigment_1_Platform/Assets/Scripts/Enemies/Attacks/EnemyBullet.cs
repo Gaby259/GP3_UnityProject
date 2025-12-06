@@ -20,6 +20,7 @@ public class EnemyBullet : Projectile
         {
             Instantiate(impactParticles, transform.position, transform.rotation);
         }
+        Destroy(gameObject);
     }
     private void DealDamage(PlayerHealth health)
     {

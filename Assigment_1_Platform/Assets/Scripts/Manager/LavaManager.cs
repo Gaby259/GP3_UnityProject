@@ -7,28 +7,16 @@ public class LavaManager : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private BossAcender lava;
     [SerializeField] private LavaPhasesConfig config;
-
-    [Header("Start Options")]
-    [SerializeField] private bool startOnPlay = false; // If lava start automatically when the scene starts
-    [SerializeField] private float startDelay = 1f;
-
+    
     [Header("Events")]
     public UnityEvent OnLavaCycleStarted; // Full lava cycle begins
     public UnityEvent OnLavaCycleEnded;  // Full lava cycle ends
     public UnityEvent<int> OnPhaseStarted;  // Triggered when entering a phase 
     public UnityEvent<int> OnPhaseEnded;   // Triggered when leaving a phase
 
+    private bool _isRunning = false; 
     private Coroutine _routine;
-
-    private void Start()
-    {
-        if (startOnPlay)
-        {
-            Invoke(nameof(StartPhases), startDelay);
-            Debug.Log("Starting Lava Phases");
-        }
-    }
-
+    
     private void OnDestroy()
     {
         if (lava != null)
@@ -40,10 +28,14 @@ public class LavaManager : MonoBehaviour
     [ContextMenu("Start Phases (Editor)")]
     public void StartPhases()
     {
-        StopPhases(); // stop any other previous phase
-        Debug.Log($" Starting phases routine.");
+        if (_isRunning) return;
+        if (!CanStart()) return;
+        
+        StopPhases();
+        _isRunning = true;
         _routine = StartCoroutine(PhasesRoutine());
-        Debug.Log("Phase routine started" + _routine);
+        Debug.Log("Phase Started ONCE");
+
     }
 
     [ContextMenu("Stop Phases (Editor)")]
@@ -54,10 +46,8 @@ public class LavaManager : MonoBehaviour
             StopCoroutine(_routine);
             _routine = null;
         }
-        if (lava != null)
-            lava.Stop();
-
-        OnLavaCycleEnded?.Invoke();
+        lava.Stop();
+        
     }
 
     private bool CanStart() //Null checks
@@ -84,8 +74,7 @@ public class LavaManager : MonoBehaviour
         {
             for (int i = 0; i < config.phases.Length; i++)
             {
-                var phase = config.phases[i]; // 
-                Debug.Log($"Phase #{i + 1}: {phase}");
+                var phase = config.phases[i]; 
 
                 OnPhaseStarted?.Invoke(i);
 
