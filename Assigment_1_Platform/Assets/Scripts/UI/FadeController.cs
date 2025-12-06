@@ -1,42 +1,41 @@
-
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class FadeController : MonoBehaviour
 {
-    [Range(0.05f, 2f)] public float fadeDuration = 0.6f;
-    public AnimationCurve ease = AnimationCurve.EaseInOut(0,0, 1,1); // suave
-    CanvasGroup cg;
+    [Header("Fade Settings")]
+    public Image image; 
+    public float defaultDuration = 1f;
 
-    void Awake() {
-        cg = GetComponent<CanvasGroup>();
-        cg.blocksRaycasts = true; // bloquea clics durante el fade
-    }
-
-    public IEnumerator FadeOut() // negro -> transparente
+    void Start()
     {
-        float t = 0f;
-        float start = 1f, end = 0f;
-        while (t < 1f) {
-            t += Time.unscaledDeltaTime / fadeDuration;
-            cg.alpha = Mathf.LerpUnclamped(start, end, ease.Evaluate(t));
+        StartCoroutine(FadeOut(1f));
+    }
+    
+     public IEnumerator FadeIn( float duration)
+    {
+        float time = 0f;
+        Color color = image.color;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            color.a = time / duration;
+            image.color = color;
             yield return null;
         }
-        cg.alpha = 0f;
-        cg.blocksRaycasts = false; // ya se puede clickear
     }
 
-    public IEnumerator FadeIn() // transparente -> negro
+    public IEnumerator FadeOut( float duration)
     {
-        cg.blocksRaycasts = true;
-        float t = 0f;
-        float start = 0f, end = 1f;
-        while (t < 1f) {
-            t += Time.unscaledDeltaTime / fadeDuration;
-            cg.alpha = Mathf.LerpUnclamped(start, end, ease.Evaluate(t));
+        float time = 0f;
+        Color color = image.color;
+        while (time < 1)
+        {
+            time += Time.deltaTime;
+            color.a = 1f - (time / 1f);
+            image.color = color;
             yield return null;
         }
-        cg.alpha = 1f;
     }
 }

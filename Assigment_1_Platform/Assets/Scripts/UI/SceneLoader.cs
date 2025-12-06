@@ -1,39 +1,22 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class SceneLoader : MonoBehaviour
 {
-    [Header("Config")]
-    [Tooltip("Nombre de la escena de juego (añádela al Build Settings)")]
-    public string gameplaySceneName = "Game"; 
+    [SerializeField] FadeController fade;
 
-    [Header("References")]
-    public FadeController fade;      // arrastra tu FadeCanvas
-    void Start() {
-        if (fade != null) StartCoroutine(fade.FadeOut());
-    }
-
-    public void StartGame()
+    public void LoadScene(string sceneName)
     {
-        StartCoroutine(LoadGameRoutine());
+        StartCoroutine(LoadRoutine(sceneName));
     }
 
-    IEnumerator LoadGameRoutine()
+    IEnumerator LoadRoutine(string sceneName)
     {
-        if (fade != null) yield return StartCoroutine(fade.FadeIn());
-        AsyncOperation op = SceneManager.LoadSceneAsync(gameplaySceneName);
-        op.allowSceneActivation = true; // activación directa tras fade
-        yield return null;
-    }
+        yield return StartCoroutine(fade.FadeIn(1f));
 
-    public void QuitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    }
+        SceneManager.LoadScene(sceneName);
 
+        yield return StartCoroutine(fade.FadeOut(1f));
+    }
 }

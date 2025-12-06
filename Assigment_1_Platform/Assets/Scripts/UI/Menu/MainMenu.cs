@@ -12,6 +12,8 @@ public class MainMenu : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private GameObject _quitConfirmationPopup;
+    
+    [SerializeField] private SceneLoader loader;
 
     void Start()
     {
@@ -19,7 +21,7 @@ public class MainMenu : MonoBehaviour
         SoundManager.PlayMusic("MainMenu");
         _startButton.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene("SampleScene");
+            loader.LoadScene("SampleScene");
             SoundManager.StopMusic();
         });
         // Show confirmation popup

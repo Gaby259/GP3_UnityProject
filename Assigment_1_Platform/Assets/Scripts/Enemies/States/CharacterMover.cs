@@ -23,6 +23,7 @@ public class CharacterMover : MonoBehaviour
     {
         _targetPosition = targetTransform;
         agent.SetDestination(_targetPosition);
+        
     }
 
 }

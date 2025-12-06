@@ -41,6 +41,15 @@ public class MeleeBehavior : MonoBehaviour, IAttackBehavior
         Vector3 playerPosition = stateManager.PlayerChecker.GetPlayerPosition();
         float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
         
+        //Rotate towards the player 
+        Vector3 direction = playerPosition - transform.position;
+        direction.y = 0f;
+        float enemyRotation = chaseConfig.turnSpeed * Time.deltaTime;
+        Vector3 newLookDirection = Vector3.RotateTowards(transform.forward, direction.normalized, enemyRotation, 0f);
+        transform.rotation = Quaternion.LookRotation(newLookDirection, Vector3.up);
+
+
+        
         //If player is near attack
         float requiredDisrance = Mathf.Max(chaseConfig.attackRadius * 1.5f, _agent.stoppingDistance +0.2f);
         if (distanceToPlayer > requiredDisrance) return;
