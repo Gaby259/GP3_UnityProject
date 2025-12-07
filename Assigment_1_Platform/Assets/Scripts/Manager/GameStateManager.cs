@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameStateManager : MonoBehaviour
+public class GameStateManager : Singleton<GameStateManager>
 {
     public static GameStateManager Instance;
     private IGameStates _currentState;

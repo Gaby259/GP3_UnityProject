@@ -41,15 +41,19 @@ public class GameManager : Singleton<GameManager>
 
     private void Win()
     {
-        StartCoroutine(WinRoutine());
+        StartCoroutine(WinTransition());
     }
 
-    private IEnumerator WinRoutine()
+    private IEnumerator WinTransition()
     {
-        yield return new WaitForSeconds(2f);
-        FadeController fade = FindObjectOfType<FadeController>();
-        fade.FadeIn(1f);
-        SceneManager.LoadScene("VictoryScreen");
+        OnWin?.Invoke();
+        yield return new WaitForSeconds(1f);
+        FadeController fade = FadeController.Instance;
+        if (fade != null)
+        {
+            yield return fade.StartCoroutine(fade.FadeIn(fade.defaultDuration));
+        }
+        SceneManager.LoadScene("VictoryScene");
     }
 
     private void HandlePlayerDeath()
@@ -58,9 +62,19 @@ public class GameManager : Singleton<GameManager>
     }
     public void Lose()
     {
+       StartCoroutine(LoseTransition());
+    }
+
+    private IEnumerator LoseTransition()
+    {
         OnLose?.Invoke();
+        yield return new WaitForSeconds(1f);
+        FadeController fade = FadeController.Instance;
+        if (fade != null)
+        {
+            yield return fade.StartCoroutine(fade.FadeIn(fade.defaultDuration));
+        }
         SceneManager.LoadScene("LoseScene");
-        //UI for loosing
     }
     
 }
