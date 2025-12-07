@@ -80,7 +80,15 @@ public class PlayerStamina : MonoBehaviour
 
         return true;
     }
-    
+    public void ReduceStamina(float amount)
+    {
+        _currentStamina -= amount;
+        _currentStamina = Mathf.Clamp(_currentStamina, 0, maxStamina);
+
+        OnStaminaChanged?.Invoke(_currentStamina, maxStamina);
+
+        StartRegenWithDelay();
+    }
     public bool Heal(PlayerHealth healthScript)
     {
         if (!SpendStamina(healStaminaCost))

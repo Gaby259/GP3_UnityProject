@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IProjectileConfigurable
 {
     [SerializeField] protected float projectileSpeed = 10f;
     [SerializeField] private float projectileLifeTime = 3f;
@@ -10,5 +10,11 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         Destroy(gameObject, projectileLifeTime);
+    }
+
+    public void Configure(int newDamage, float newSpeed)
+    {
+        damage = newDamage;
+        projectileSpeed = newSpeed;
     }
 }

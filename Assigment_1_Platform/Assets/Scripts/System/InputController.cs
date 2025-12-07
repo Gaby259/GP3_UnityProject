@@ -12,7 +12,8 @@ public class InputController : MonoBehaviour
     public event Action DashEvent;
     public event Action ShieldActivateEvent;    
     public event Action ShieldDeactivateEvent;
-    public event Action AttackEvent;
+    public event Action StartAttackEvent;
+    public event Action EndAttackEvent;
     public event Action HealEvent;
     
     public event Action PauseEvent;
@@ -30,6 +31,7 @@ public class InputController : MonoBehaviour
         _gameControls.Player.Jump.performed += OnJumpPerformed; //performed a jump call this function
         _gameControls.Player.Dash.performed += OnDashPerformed;
         _gameControls.Player.Attack.performed += OnAttackPerformed;
+        _gameControls.Player.Attack.canceled += OnAttackCancelled;
         _gameControls.Player.Heal.performed += OnHealPerformed;
         _gameControls.Player.Shield.performed += OnShieldPerformed;
         _gameControls.Player.Shield.canceled += OnShieldCancelled;
@@ -71,10 +73,13 @@ public class InputController : MonoBehaviour
     
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
-        AttackEvent?.Invoke();
+        StartAttackEvent?.Invoke();
     }
-    
-    
+
+    private void OnAttackCancelled(InputAction.CallbackContext context)
+    {
+        EndAttackEvent?.Invoke();
+    }
     private void OnHealPerformed(InputAction.CallbackContext context)
     {
        HealEvent?.Invoke();

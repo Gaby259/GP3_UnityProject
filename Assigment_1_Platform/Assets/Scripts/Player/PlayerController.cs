@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         _health = GetComponent<PlayerHealth>();    
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         if (_inputController != null) 
         {
@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnDisable() // this is for handling the error MissingReferenceException
     {
+        
         if (_inputController != null)
         {
             _inputController.MoveEvent -= MovementInput;
