@@ -7,6 +7,10 @@ public class FadeController : MonoBehaviour
     [Header("Fade Settings")]
     public Image image; 
     public float defaultDuration = 1f;
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);  
+    }
 
     void Start()
     {

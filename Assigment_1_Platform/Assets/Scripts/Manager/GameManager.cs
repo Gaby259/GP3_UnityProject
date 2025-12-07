@@ -34,18 +34,22 @@ public class GameManager : Singleton<GameManager>
 
         if (_rareItems >= targetRareItems)
         {
-            Debug.Log("Rare items removed");
             Win();
         }
            
     }
 
-    public void Win()
+    private void Win()
     {
-        OnWin?.Invoke();
-        Debug.Log("Win");
-        SceneManager.LoadScene("VictoryScene");
-        //UI for victory
+        StartCoroutine(WinRoutine());
+    }
+
+    private IEnumerator WinRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        FadeController fade = FindObjectOfType<FadeController>();
+        fade.FadeIn(1f);
+        SceneManager.LoadScene("VictoryScreen");
     }
 
     private void HandlePlayerDeath()
@@ -55,7 +59,6 @@ public class GameManager : Singleton<GameManager>
     public void Lose()
     {
         OnLose?.Invoke();
-        Debug.Log("Lose");
         SceneManager.LoadScene("LoseScene");
         //UI for loosing
     }
