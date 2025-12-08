@@ -4,7 +4,10 @@ using UnityEngine.InputSystem;
 
 public class InputController : MonoBehaviour
 {
+    private PlayerInput _playerInput;
     private GameControls _gameControls;
+    
+   
     
     //Player Controls
     public event Action JumpEvent;
@@ -20,9 +23,6 @@ public class InputController : MonoBehaviour
     private void Awake()
     {
         _gameControls = new GameControls();
-         var rebinds = PlayerPrefs.GetString("rebinds");
-    if (!string.IsNullOrEmpty(rebinds))
-        _gameControls.LoadBindingOverridesFromJson(rebinds);
     }
 
     private void OnEnable()
