@@ -14,9 +14,8 @@ public class ControlsMenuState : IGameStates
     {
         Time.timeScale = 0f;
         _controlsUI.SetActive(true);
-
-        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         Debug.Log("Entered CONTROLS MENU state");
     }

@@ -38,6 +38,7 @@ public class GameStateManager : Singleton<GameStateManager>
       ChangeState(PlayingState);
       pauseMenuUI.SetActive(false);
       confirmPopupUI.SetActive(false);
+      controlsMenuUI.SetActive(false);
       SoundManager.PlayMusic("Gameplay");
     }
 
