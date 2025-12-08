@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class RebindSaveLoad : MonoBehaviour
 {
     public InputActionAsset actions;
-
     public void OnEnable()
     {
         var rebinds = PlayerPrefs.GetString("rebinds");

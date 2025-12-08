@@ -504,7 +504,7 @@
                     "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "Heal",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -526,7 +526,7 @@
                     "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard&Mouse",
                     "action": "Shield",
                     "isComposite": false,
                     "isPartOfComposite": false

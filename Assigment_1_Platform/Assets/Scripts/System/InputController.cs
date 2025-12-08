@@ -20,6 +20,9 @@ public class InputController : MonoBehaviour
     private void Awake()
     {
         _gameControls = new GameControls();
+         var rebinds = PlayerPrefs.GetString("rebinds");
+    if (!string.IsNullOrEmpty(rebinds))
+        _gameControls.LoadBindingOverridesFromJson(rebinds);
     }
 
     private void OnEnable()
