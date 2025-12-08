@@ -17,7 +17,7 @@ public class EndScreenController : MonoBehaviour
 
     private void ReturnToMainMenu()
     {
-        FadeController fade = FindObjectOfType<FadeController>();
+        FadeController fade = FindAnyObjectByType<FadeController>();
         if (fade != null)
             StartCoroutine(ReturnRoutine(fade));
         else

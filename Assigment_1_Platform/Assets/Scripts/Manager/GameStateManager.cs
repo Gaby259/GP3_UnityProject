@@ -15,7 +15,7 @@ public class GameStateManager : Singleton<GameStateManager>
     public ConfirmReturnState ConfirmReturnState { get; private set; }
     public PlayingState PlayingState { get; private set; }
     public PausedState PausedState { get; private set; }
-  //  public ControlsMenuState ControlsMenuState { get; private set; }
+    public ControlsMenuState ControlsMenuState { get; private set; }
   public IGameStates CurrentState => _currentState;
   
 
@@ -29,7 +29,7 @@ public class GameStateManager : Singleton<GameStateManager>
         ConfirmReturnState= new ConfirmReturnState(this, confirmPopupUI);
         PlayingState = new PlayingState(this);
         PausedState = new PausedState(this, pauseMenuUI);
-  //      ControlsMenuState = new ControlsMenuState(this);
+        ControlsMenuState = new ControlsMenuState(this,  controlsMenuUI);
     }
     
 

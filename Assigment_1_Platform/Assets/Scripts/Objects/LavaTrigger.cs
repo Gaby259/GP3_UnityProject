@@ -14,7 +14,6 @@ public class LavaTrigger : MonoBehaviour
         {
             lavaManager.StartPhases();
             hasActivated = true;
-            Debug.Log("Lava triggered ONCE");
         }
     }
 }

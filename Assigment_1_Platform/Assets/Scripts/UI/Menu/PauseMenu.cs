@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour
         // Controls Menu
         controlsButton.onClick.AddListener(() =>
         {
-           // GameStateManager.Instance.ChangeState(GameStateManager.Instance.ControlsMenuState);
+           GameStateManager.Instance.ChangeState(GameStateManager.Instance.ControlsMenuState);
         });
 
         // Open Confirmation Popup

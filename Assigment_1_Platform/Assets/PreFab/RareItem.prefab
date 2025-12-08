@@ -106,7 +106,7 @@ MonoBehaviour:
   OnPoinstAward:
     m_PersistentCalls:
       m_Calls: []
-  _pointValue: 5
+  _pointValue: 1
 --- !u!1 &3516401245981753244
 GameObject:
   m_ObjectHideFlags: 0

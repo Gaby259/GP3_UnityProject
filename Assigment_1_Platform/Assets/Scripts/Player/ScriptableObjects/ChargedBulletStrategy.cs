@@ -8,9 +8,6 @@ public class ChargedBulletStrategy : ShootingStrategy
     [SerializeField] private float chargedSpeed = 18f;
     [SerializeField] private float scaleMultiplier = 1.5f;
     
-    [Header("Glow Settings")]
-    [SerializeField] private Color glowColor = Color.cyan;
-    [SerializeField] private float glowIntensity = 6f;
     
 
     public override void Shoot(Transform shootPoint)

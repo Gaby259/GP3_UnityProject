@@ -21,7 +21,6 @@ public class GameManager : Singleton<GameManager>
 
         if (player != null)
         {
-            Debug.Log("Player found");
             player.OnPlayerDeath += HandlePlayerDeath;
         }
     }

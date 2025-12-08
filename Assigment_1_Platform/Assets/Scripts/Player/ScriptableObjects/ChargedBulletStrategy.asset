@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce4140c9d55b45e1aef6c7cd865e8518, type: 3}
   m_Name: ChargedBulletStrategy
   m_EditorClassIdentifier: 
-  ShootingStrategyName: Default
-  bulletPrefab: {fileID: 0}
+  ShootingStrategyName: Charged Attack
+  bulletPrefab: {fileID: 9022003556847160968, guid: 513f97c9a5df00f4b9b4bbf8f75b6f3e, type: 3}
   chargedDamage: 2
   chargedSpeed: 18
   scaleMultiplier: 1.5

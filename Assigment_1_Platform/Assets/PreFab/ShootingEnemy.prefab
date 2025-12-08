@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 3284779707698506081}
   - component: {fileID: 6036108016395572486}
   - component: {fileID: 5005826112238886283}
+  - component: {fileID: 6828486323505424266}
   m_Layer: 8
   m_Name: ShootingEnemy
   m_TagString: Untagged
@@ -157,6 +158,19 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: a12e7f5bec4b8774aafff251dd61d057, type: 2}
   shootingPoint: {fileID: 3312322644651365284}
   aimPoint: {fileID: 5517100346292375380}
+--- !u!114 &6828486323505424266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489921557757874684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088dd25badfca5043b0f29b9276f97ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
 --- !u!1 &4523938783650226365
 GameObject:
   m_ObjectHideFlags: 0

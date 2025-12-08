@@ -14,8 +14,7 @@ public class PlayingState : IGameStates
         Time.timeScale = 1;
 
         _manager.Input.PauseEvent += OnPausePressed;
-
-        Debug.Log("Entered PLAYING state");
+        
     }
 
     public void Update()

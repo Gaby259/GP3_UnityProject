@@ -9,8 +9,7 @@ public class ChangeEmissive : MonoBehaviour
     public Material normalMaterial;
 
     //public Material normalMaterial;
-
-    private bool isOn = false;
+   // private bool isOn = false;
     
 
     private void Start()
