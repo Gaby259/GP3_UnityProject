@@ -59,6 +59,7 @@ public class ShootingBehavior : MonoBehaviour, IAttackBehavior
         if (config == null || config.bulletPrefab == null || shootingPoint == null || stateManager == null || stateManager.PlayerChecker == null)
             return;
         Instantiate(config.bulletPrefab, shootingPoint.position, shootingPoint.rotation);
+        SoundManager.PlaySFX("Enemy Shoot");
     }
 }
 

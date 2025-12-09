@@ -130,6 +130,6 @@ public class BossAcender : MonoBehaviour
 
     private void DealDamage(PlayerHealth health)
     {
-        health.TakeDamage(damagePerHit);
+        health.TakeDamage(damagePerHit); 
     }
 }

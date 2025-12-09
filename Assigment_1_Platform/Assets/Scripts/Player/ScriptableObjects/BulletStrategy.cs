@@ -16,6 +16,7 @@ public class BulletStrategy : ShootingStrategy
     
     _nextAllowedFireTime = Time.time + (1f / fireRate);
     Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+    SoundManager.PlaySFX("Attack");
 }
 
 }

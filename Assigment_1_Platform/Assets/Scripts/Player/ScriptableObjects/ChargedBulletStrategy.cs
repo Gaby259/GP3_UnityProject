@@ -15,7 +15,6 @@ public class ChargedBulletStrategy : ShootingStrategy
         if (!bulletPrefab || !shootPoint) return;
 
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        
         IProjectileConfigurable configurable = bullet.GetComponent<IProjectileConfigurable>();
         if (configurable != null)
         {
@@ -23,5 +22,7 @@ public class ChargedBulletStrategy : ShootingStrategy
         }
         
         bullet.transform.localScale *= scaleMultiplier;
+        SoundManager.PlaySFX("Power Up");
+        
     }
 }

@@ -138,6 +138,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsGrounded())
         {
+            SoundManager.PlaySFX("Jump");
             _currentVelocity.y = controllerConfig.jumpHeight;
         }
         
@@ -155,6 +156,7 @@ public class PlayerController : MonoBehaviour
         {
             _currentVelocity.y += Physics.gravity.y * controllerConfig.gravity *Time.deltaTime;
           //  Debug.Log("Velocity "+_currentVelocity.y);
+          
         }
         _characterController.Move(_currentVelocity * Time.deltaTime);
     
