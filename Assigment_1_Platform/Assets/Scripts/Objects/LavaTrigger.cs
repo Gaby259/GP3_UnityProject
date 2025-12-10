@@ -14,6 +14,7 @@ public class LavaTrigger : MonoBehaviour
         {
             lavaManager.StartPhases();
             hasActivated = true;
+            SoundManager.PlaySFX("LavaTrigger");
         }
     }
 }

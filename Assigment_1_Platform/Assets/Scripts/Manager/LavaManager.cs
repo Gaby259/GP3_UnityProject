@@ -34,7 +34,7 @@ public class LavaManager : MonoBehaviour
         StopPhases();
         _isRunning = true;
         _routine = StartCoroutine(PhasesRoutine());
-       
+       SoundManager.PlaySFX("Lava");
 
     }
 

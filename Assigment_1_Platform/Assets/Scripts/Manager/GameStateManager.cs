@@ -52,6 +52,5 @@ public class GameStateManager : Singleton<GameStateManager>
         _currentState?.Exit();
         _currentState = newState;
         _currentState.Enter();
-        Debug.Log("STATE: " + newState.GetType().Name);
     }
 }

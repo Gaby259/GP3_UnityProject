@@ -10,7 +10,7 @@ public class PatrolState : IState
     }
     public void OnEnter()
     {
-        Debug.Log("Entering Patrol State");
+      
     }
 
     public void UpdateState()
