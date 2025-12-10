@@ -30,9 +30,8 @@ public class PlayerHealth : MonoBehaviour
       //Notify all observer of health damage
       //? can be not --> null check
       OnHealthChanged?.Invoke(_currentHealth, maxHealth); // Invoke = notifies the other method that calls this event... then something happens
+      Debug.Log("Health " + _currentHealth);
       SoundManager.PlaySFX("Take Damage");
-      HealthCircleFlashUI.Instance.FlashOnDamage();
-
       if (_currentHealth <= 0)
       {
          OnPlayerDeath?.Invoke();

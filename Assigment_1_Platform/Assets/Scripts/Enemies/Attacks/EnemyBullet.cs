@@ -25,5 +25,6 @@ public class EnemyBullet : Projectile
     private void DealDamage(PlayerHealth health)
     {
         health.TakeDamage(damage);
+        Debug.Log("Damage given" + damage);
     }
 }

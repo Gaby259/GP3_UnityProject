@@ -10919,10 +10919,6 @@ PrefabInstance:
       value: ShootingEnemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6036108016395572486, guid: 1c7f4eb82378a084db4887a7a25e2b7d, type: 3}
-      propertyPath: checkRadius
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6036108016395572486, guid: 1c7f4eb82378a084db4887a7a25e2b7d, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 312408817}
@@ -13683,7 +13679,6 @@ GameObject:
   - component: {fileID: 2010858827}
   - component: {fileID: 2010858829}
   - component: {fileID: 2010858828}
-  - component: {fileID: 2010858830}
   m_Layer: 5
   m_Name: PlayerHealth
   m_TagString: Untagged
@@ -13748,21 +13743,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2010858826}
   m_CullTransparentMesh: 1
---- !u!114 &2010858830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2010858826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3116f588d35cf8c4b82ea29993c8b53d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  circleImage: {fileID: 2010858828}
-  originalColor: {r: 1, g: 1, b: 1, a: 0}
-  flashColor: {r: 1, g: 0, b: 0, a: 0}
 --- !u!1 &2037039122
 GameObject:
   m_ObjectHideFlags: 0
