@@ -27,11 +27,12 @@ public class PlayerHealth : MonoBehaviour
    {
       if (isInvulnerable) return;
       _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, maxHealth); //Mathf.Max Dont go over
-      Debug.Log("Take damage= " + damage +"current Health = " +  _currentHealth);
       //Notify all observer of health damage
       //? can be not --> null check
       OnHealthChanged?.Invoke(_currentHealth, maxHealth); // Invoke = notifies the other method that calls this event... then something happens
       SoundManager.PlaySFX("Take Damage");
+      HealthCircleFlashUI.Instance.FlashOnDamage();
+
       if (_currentHealth <= 0)
       {
          OnPlayerDeath?.Invoke();
